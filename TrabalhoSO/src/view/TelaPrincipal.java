@@ -1,10 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
+import classes.Escalonador;
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
 
@@ -33,7 +31,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         textoProcessadorA = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        botaoProsseguir = new javax.swing.JButton();
         textoProcessadorB = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         textoProcessadorC = new javax.swing.JTextField();
@@ -52,10 +50,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         textoFilaFCFS = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         textoFilaFeed = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tabela1 = new javax.swing.JTable();
+        jLabel10 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Escalonador de Processos");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -68,11 +67,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/seta.png"))); // NOI18N
-        jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoProsseguir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/seta.png"))); // NOI18N
+        botaoProsseguir.setContentAreaFilled(false);
+        botaoProsseguir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoProsseguirActionPerformed(evt);
             }
         });
 
@@ -124,11 +123,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabel5)
                             .addComponent(textoProcessadorD, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel1)
-                            .addComponent(textoProcessadorA, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel1)
+                        .addComponent(textoProcessadorA, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(158, 158, 158)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -141,7 +138,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(105, 105, 105)
-                .addComponent(jButton1)
+                .addComponent(botaoProsseguir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -168,7 +165,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                 .addGap(54, 54, 54))
                             .addComponent(textoProcessadorD, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1))
+                .addComponent(botaoProsseguir))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -179,7 +176,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 29, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -220,17 +217,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         textoFilaFeed.setEditable(false);
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        jLabel10.setText("João Pedro Sá Medeiros e André Luiz");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(textoFilaFeed, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                    .addComponent(textoFilaFCFS)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel9)
+                        .addComponent(textoFilaFeed, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                        .addComponent(textoFilaFCFS))
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,24 +243,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(textoFilaFCFS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(26, 26, 26))
+                    .addComponent(jLabel9)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(textoFilaFeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        tabela1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Teste", "ddddull", "sdsdsd"
+        jButton1.setText("Escolher Arquivo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
-        ));
-        jScrollPane2.setViewportView(tabela1);
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -267,19 +265,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(192, 192, 192)
+                        .addGap(304, 304, 304)
                         .addComponent(jLabel2)
-                        .addGap(247, 247, 247)
+                        .addGap(135, 135, 135)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(47, 47, 47)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)
+                                .addGap(71, 71, 71)))
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -287,30 +288,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1)))
+                        .addGap(0, 26, Short.MAX_VALUE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        setBounds(0, 0, 895, 597);
+        setSize(new java.awt.Dimension(895, 406));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void textoProcessadorAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoProcessadorAActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoProcessadorAActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoProsseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProsseguirActionPerformed
         // TODO add your handling code here:
         //JOptionPane.showMessageDialog(null, "Você pressionou o botão");
         if(textoLog.getText().equals("")){
@@ -322,12 +325,54 @@ public class TelaPrincipal extends javax.swing.JFrame {
             textoProcessadorA.setText("André Escroto");
             textoProcessadorB.setText("Processo 234");
             textoLog.setText(textoLog.getText()+"\n-FODASSSE MERMAO");
-                        TableColumn tc = new TableColumn(75);
-            tabela1.addColumn(tc);
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botaoProsseguirActionPerformed
 
+    public static void setTextoLog(String texto){
+        textoLog.setText(texto);
+    }
+    public static String getTextoLog(){
+        return textoLog.getText();
+    }
+    public static void setTextoFilaFCFS(String texto){
+        textoFilaFCFS.setText(texto);
+    }
+    public static String getTextoFilaFCFS(){
+        return textoFilaFCFS.getText();
+    }
+    public static void setTextoFilaFeed(String texto){
+        textoFilaFeed.setText(texto);
+    }
+    public static String getTextoFilaFeed(){
+        return textoFilaFeed.getText();
+    }
+    public static void setTextoProcessadorA(String texto){
+        textoProcessadorA.setText(texto);
+    }
+    public static String getTextoProcessadorA(){
+        return textoProcessadorA.getText();
+    }
+    public static void setTextoProcessadorB(String texto){
+        textoProcessadorB.setText(texto);
+    }
+    public static String getTextoProcessadorB(){
+        return textoProcessadorB.getText();
+    }
+    public static void setTextoProcessadorC(String texto){
+        textoProcessadorC.setText(texto);
+    }
+    public static String getTextoProcessadorC(){
+        return textoProcessadorC.getText();
+    }
+    public static void setTextoProcessadorD(String texto){
+        textoProcessadorD.setText(texto);
+    }
+    public static String getTextoProcessadorD(){
+        return textoProcessadorD.getText();
+    }
+    
+    
     private void textoProcessadorBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoProcessadorBActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoProcessadorBActionPerformed
@@ -339,6 +384,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void textoProcessadorDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoProcessadorDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoProcessadorDActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        if(f != null){
+            filename = f.getAbsolutePath();
+            escalonador.leProcessos(filename);
+        }else{
+            JOptionPane.showMessageDialog(null, "Você não selecionou um arquivo");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -376,8 +433,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton botaoProsseguir;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -391,14 +450,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tabela1;
-    private javax.swing.JTextField textoFilaFCFS;
-    private javax.swing.JTextField textoFilaFeed;
-    private javax.swing.JTextArea textoLog;
-    private javax.swing.JTextField textoProcessadorA;
-    private javax.swing.JTextField textoProcessadorB;
-    private javax.swing.JTextField textoProcessadorC;
-    private javax.swing.JTextField textoProcessadorD;
+    public static javax.swing.JTextField textoFilaFCFS;
+    public static javax.swing.JTextField textoFilaFeed;
+    public static javax.swing.JTextArea textoLog;
+    public static javax.swing.JTextField textoProcessadorA;
+    public static javax.swing.JTextField textoProcessadorB;
+    public static javax.swing.JTextField textoProcessadorC;
+    public static javax.swing.JTextField textoProcessadorD;
     // End of variables declaration//GEN-END:variables
+    public static String filename = "";
+    Escalonador escalonador = new Escalonador();
+
 }
+
