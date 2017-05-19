@@ -8,7 +8,8 @@ import view.TelaPrincipal;
 
 
 public class Escalonador {
-        public Processo[] leProcessos(String nome){
+        public static Maquina maquina = new Maquina();
+        public Processo[] leArquivoProcessos(String nome){
             Scanner bd;
             try{
                 bd = new Scanner(new File(nome));
@@ -40,6 +41,7 @@ public class Escalonador {
                     processos[contador-1] = novoProcesso;
                     TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n"+novoProcesso.toString());
                 }
+                
                 return processos;
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, "Arquivo de entrada não localizado");
