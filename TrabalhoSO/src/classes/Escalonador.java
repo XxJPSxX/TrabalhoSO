@@ -9,6 +9,7 @@ import view.TelaPrincipal;
 
 public class Escalonador {
         public static Maquina maquina = new Maquina();
+        public Processo[] listaProcessos;
         public Processo[] leArquivoProcessos(String nome){
             Scanner bd;
             try{

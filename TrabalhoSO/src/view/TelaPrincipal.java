@@ -379,10 +379,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_textoProcessadorAActionPerformed
 
     private void botaoProsseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProsseguirActionPerformed
-
+        if(escalonador.listaProcessos == null){
+            //lista de processos esta vazia, nao pode-se continuar o programa
+            JOptionPane.showMessageDialog(null, "Escolha um arquivo de processos válido!\nNão foi possivel detectar processos válidos");
+            return;// retorna para nao prosseguir com o tempo
+        }else{
+            
+        }
         momentoAtual++;
         setTextoMomentoAtual(momentoAtual);
-        escalonador.leArquivoProcessos(filename);
     }//GEN-LAST:event_botaoProsseguirActionPerformed
     public static int getMomentoAtual(){
         return momentoAtual;
@@ -464,7 +469,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         File f = chooser.getSelectedFile();
         if(f != null){
             filename = f.getAbsolutePath();
-            escalonador.leArquivoProcessos(filename);
+            escalonador.listaProcessos = escalonador.leArquivoProcessos(filename);
         }else{
             JOptionPane.showMessageDialog(null, "Você não selecionou um arquivo");
         }
