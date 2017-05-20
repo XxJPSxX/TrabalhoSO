@@ -2,6 +2,9 @@ package classes;
 
 
 public class Processo {
+    
+    private static int n=0;
+    
     int numero;
     //String nome;
     int momentoChegada;
@@ -14,6 +17,7 @@ public class Processo {
     int cdDriver;
 
     public Processo(int numero, int momentoChegada, int prioridade, int duracao, int memoria, int impressora, int scanner, int modem, int cdDriver) {
+        n++;
         this.numero = numero;
         this.momentoChegada = momentoChegada;
         this.prioridade = prioridade;
