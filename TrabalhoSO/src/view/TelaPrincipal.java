@@ -1,10 +1,11 @@
 package view;
 
-import classes.Escalonador;
+import classes.Despachante;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
+//import classes.Processo; 
 
 /**
  *
@@ -379,7 +380,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_textoProcessadorAActionPerformed
 
     private void botaoProsseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProsseguirActionPerformed
-        if(escalonador.listaProcessos == null){
+        if(despachante.listaProcessos == null){
             //lista de processos esta vazia, nao pode-se continuar o programa
             JOptionPane.showMessageDialog(null, "Escolha um arquivo de processos válido!\nNão foi possivel detectar processos válidos");
             return;// retorna para nao prosseguir com o tempo
@@ -469,7 +470,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         File f = chooser.getSelectedFile();
         if(f != null){
             filename = f.getAbsolutePath();
-            escalonador.listaProcessos = escalonador.leArquivoProcessos(filename);
+            despachante.listaProcessos = despachante.leArquivoProcessos(filename);
+            //Processo.resetCount();
         }else{
             JOptionPane.showMessageDialog(null, "Você não selecionou um arquivo");
         }
@@ -508,6 +510,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 new TelaPrincipal().setVisible(true);
             }
         });
+        
+        Thread threadListaProcessos = new Thread(despachante);
+        threadListaProcessos.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -547,7 +552,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     public static String filename = "";
     public static int momentoAtual = 0;
-    Escalonador escalonador = new Escalonador();
-
+    public static Despachante despachante = new Despachante();
 }
 
