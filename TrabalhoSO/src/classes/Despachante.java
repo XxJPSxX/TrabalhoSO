@@ -9,14 +9,14 @@ import classes.Processo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Despachante implements Runnable{
+public class Despachante{
         public static Maquina maquina = new Maquina();
         //public Processo[] listaProcessos;
         public static List<Processo> listaProcessos = new ArrayList<Processo>();
         public  List<Processo> filaEntrada = new ArrayList<Processo>();
         public static List<Bloco> listaBlocos = GerenciadorMemoria.criaListaDeBlocos();
         
-        public void run(){
+        public void checaFilaEntrada(){
             
             int atual = TelaPrincipal.getMomentoAtual();
             
@@ -35,7 +35,31 @@ public class Despachante implements Runnable{
             }
                 
             if(filaEntrada.size()!=0){
-                
+                int i=0;
+                while(i<filaEntrada.size()){
+                    Processo p = filaEntrada.get(i);
+                    int resultado = GerenciadorMemoria.insereProcesso(p, listaBlocos);
+                    if(resultado==0){
+                        if(p.getPrioridade()==0){
+                            EscalonadorTempoReal.insereProcesso(p);
+                        }
+                        else{
+                            EscalonadorUsuario.insereProcesso(p);
+                        }
+                    }
+                    else{
+                        //se o processo for de tempo real ele não pode esperar
+                        if(p.getPrioridade()==0){
+                            //abre espaco para o processo ser inserido
+                            EscalonadorUsuario.suspendeProcesso(p);
+                            //insere processo
+                            GerenciadorMemoria.insereProcesso(p, listaBlocos);
+                            EscalonadorTempoReal.insereProcesso(p);
+                        }
+
+                    }
+                    i++;
+                }
             }
         }
         

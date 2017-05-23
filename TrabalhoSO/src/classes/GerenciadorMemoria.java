@@ -25,7 +25,7 @@ public class GerenciadorMemoria {
         //0:inserido com sucesso
         //!=0: numero de blocos que faltam
         int tamanhoProcesso = processo.getMemoria();
-        int qtdBlocos = tamanhoProcesso/tamanhoBloco;
+        int qtdBlocos = tamanhoProcesso/tamanhoBloco; 
         if(tamanhoProcesso%tamanhoBloco != 0){
             qtdBlocos++;//Vai ter um bloco que não vai ficar cheio
         }
@@ -61,12 +61,16 @@ public class GerenciadorMemoria {
     }
     public static void removeProcesso(Processo processo, List<Bloco> listaBlocos){
         if(processo.getIndices() == null){
-            System.out.println("Processo não está em execução!!!");
+            System.out.println("Processo não está em memória principal!!!");
             return;
         }
         for(int i = 0;i<processo.getIndices().length;i++){
             listaBlocos.get(processo.getIndices()[i]).setLivre(0);//seta valor livre para o bloco i
             listaBlocos.get(processo.getIndices()[i]).setProcessoAssociado(null);
+            
+            //limpa os indices que estavam em processo
+            processo.setIndices(null);
+            
         }
         TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+processo.getNumero()+" Removido da memória com sucesso"
                 + "\nQuantidade de memória disponível: "+ GerenciadorMemoria.memoriaDisponivel(listaBlocos));

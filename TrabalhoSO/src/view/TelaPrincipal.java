@@ -1,6 +1,8 @@
 package view;
 
 import classes.Despachante;
+import classes.EscalonadorTempoReal;
+import classes.EscalonadorUsuario;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -380,14 +382,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_textoProcessadorAActionPerformed
 
     private void botaoProsseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProsseguirActionPerformed
-        if(despachante.listaProcessos == null){
+        //if(despachante.listaProcessos == null){
+        if(despachante.listaProcessos.size() == 0){
             //lista de processos esta vazia, nao pode-se continuar o programa
             JOptionPane.showMessageDialog(null, "Escolha um arquivo de processos válido!\nNão foi possivel detectar processos válidos");
             return;// retorna para nao prosseguir com o tempo
         }else{
             
         }
-        despachante.testeGerenciadorMemoria();
+        //despachante.testeGerenciadorMemoria();
+        despachante.checaFilaEntrada();
         momentoAtual++;
         setTextoMomentoAtual(momentoAtual);
     }//GEN-LAST:event_botaoProsseguirActionPerformed
@@ -512,8 +516,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         
-        Thread threadListaProcessos = new Thread(despachante);
-        threadListaProcessos.start();
+        Thread threadEscalonadorTR = new Thread(escalonadorTR);
+        threadEscalonadorTR.start();
+        
+        Thread threadEscalonadorU = new Thread(escalonadorU);
+        threadEscalonadorU.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -554,5 +561,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public static String filename = "";
     public static int momentoAtual = 0;
     public static Despachante despachante = new Despachante();
+    public static EscalonadorTempoReal escalonadorTR = new EscalonadorTempoReal();
+    public static EscalonadorUsuario escalonadorU = new EscalonadorUsuario();
 }
 
