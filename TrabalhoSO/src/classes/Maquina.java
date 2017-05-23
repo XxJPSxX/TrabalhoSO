@@ -2,7 +2,7 @@
 package classes;
 
 public class Maquina {
-    int memoria = 1024;
+    public static int memoria = 1024;
     int impressora = 2;
     int scanner = 1;
     int modem = 1;

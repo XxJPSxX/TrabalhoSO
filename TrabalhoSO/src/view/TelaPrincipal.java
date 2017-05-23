@@ -387,6 +387,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }else{
             
         }
+        despachante.testeGerenciadorMemoria();
         momentoAtual++;
         setTextoMomentoAtual(momentoAtual);
     }//GEN-LAST:event_botaoProsseguirActionPerformed

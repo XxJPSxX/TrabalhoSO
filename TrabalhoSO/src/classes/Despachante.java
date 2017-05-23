@@ -12,8 +12,9 @@ import java.util.List;
 public class Despachante implements Runnable{
         public static Maquina maquina = new Maquina();
         //public Processo[] listaProcessos;
-        public List<Processo> listaProcessos = new ArrayList<Processo>();
-        public List<Processo> filaEntrada = new ArrayList<Processo>();
+        public static List<Processo> listaProcessos = new ArrayList<Processo>();
+        public  List<Processo> filaEntrada = new ArrayList<Processo>();
+        public static List<Bloco> listaBlocos = GerenciadorMemoria.criaListaDeBlocos();
         
         public void run(){
             
@@ -83,6 +84,29 @@ public class Despachante implements Runnable{
                 
             }
             
-    }
+        }
+        public void testeGerenciadorMemoria(){
+            System.out.println("Tamanho do array de blocos: "+listaBlocos.size());
+            System.out.println("Quantidade de blocos: "+GerenciadorMemoria.memoriaDisponivel(listaBlocos)/32);
+            System.out.println("Quantidade de memória disponível: "+ GerenciadorMemoria.memoriaDisponivel(listaBlocos));
+            int resultado;
+            for(int i=0;i<listaProcessos.size();i++){
+                resultado = GerenciadorMemoria.insereProcesso(listaProcessos.get(i), listaBlocos);
+
+                if(resultado == 0){
+                    System.out.println("Processo "+ listaProcessos.get(i).getNumero() +" Inserido com sucesso");
+                }else{
+                    System.out.println("Faltaram "+resultado+" blocos para inserir o processo "+listaProcessos.get(i).getNumero());
+                }
+                System.out.println("Quantidade de blocos: "+GerenciadorMemoria.memoriaDisponivel(listaBlocos)/32);
+                System.out.println("Quantidade de memória disponível: "+ GerenciadorMemoria.memoriaDisponivel(listaBlocos));
+            }
+            System.out.println("Quantidade de blocos: "+GerenciadorMemoria.memoriaDisponivel(listaBlocos)/32);
+            System.out.println("Quantidade de memória disponível: "+ GerenciadorMemoria.memoriaDisponivel(listaBlocos));
+            GerenciadorMemoria.removeProcesso(listaProcessos.get(2), listaBlocos);
+            
+            System.out.println("Quantidade de blocos: "+GerenciadorMemoria.memoriaDisponivel(listaBlocos)/32);
+            System.out.println("Quantidade de memória disponível: "+ GerenciadorMemoria.memoriaDisponivel(listaBlocos));
+        }
 }
 

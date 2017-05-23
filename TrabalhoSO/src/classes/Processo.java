@@ -15,6 +15,7 @@ public class Processo {
     private int scanner;
     private int modem;
     private int cdDriver;
+    private int[] indices;
 
     public Processo(int numero, int momentoChegada, int prioridade, int duracao, int memoria, int impressora, int scanner, int modem, int cdDriver) {
         //n++;
@@ -27,6 +28,7 @@ public class Processo {
         this.scanner = scanner;
         this.modem = modem;
         this.cdDriver = cdDriver;
+        this.indices = null;
     }
 
     @Override
@@ -39,6 +41,14 @@ public class Processo {
         n = 0;
     }
     */
+    
+    public int[] getIndices() {
+        return indices;
+    }
+
+    public void setIndices(int[] indices) {
+        this.indices = indices;
+    }
     
     public int getNumero() {
         return numero;
@@ -110,6 +120,6 @@ public class Processo {
 
     public void setCdDriver(int cdDriver) {
         this.cdDriver = cdDriver;
-    }    
+    }
     
 }
