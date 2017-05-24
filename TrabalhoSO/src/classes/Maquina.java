@@ -2,13 +2,22 @@
 package classes;
 
 public class Maquina {
-    public static int memoria = 1024;
-    int impressora = 2;
-    int scanner = 1;
-    int modem = 1;
-    int cdDriver = 2;
+    private static Maquina instancia;
+    
+    private int memoria = 1024;
+    private int impressora = 2;
+    private int scanner = 1;
+    private int modem = 1;
+    private int cdDriver = 2;
 
-    public Maquina() {
+    private Maquina() {
+    }
+    
+    public static synchronized Maquina getInstance(){
+        if(instancia==null){
+            instancia = new Maquina();   
+        }
+        return instancia;
     }
     
     public int getMemoria() {

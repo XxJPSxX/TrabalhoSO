@@ -13,13 +13,22 @@ import java.util.List;
  * @author André
  */
 public class EscalonadorUsuario implements Runnable{
+    private static EscalonadorUsuario instancia;
+    
     private static List<Processo> filaFeed1 = new ArrayList<Processo>();
     private static List<Processo> filaFeed2 = new ArrayList<Processo>();
     private static List<Processo> filaFeed3 = new ArrayList<Processo>();
     private int quantum = 2;
     
-    public EscalonadorUsuario(){
+    private EscalonadorUsuario(){
         
+    }
+    
+    public static synchronized EscalonadorUsuario getInstance(){
+        if(instancia==null){
+            instancia = new EscalonadorUsuario();
+        }
+        return instancia;
     }
     
     public void run(){

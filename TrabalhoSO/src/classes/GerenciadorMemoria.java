@@ -8,7 +8,7 @@ import view.TelaPrincipal;
 
 public class GerenciadorMemoria {
     public static int tamanhoBloco = 32;
-    public static int tamanhoMemoria = Maquina.memoria;
+    public static int tamanhoMemoria = Maquina.getInstance().getMemoria();
     
     public static List<Bloco> criaListaDeBlocos(){
         //cria uma lista de blocos com o tamanho de bloco e tamanho da memoria fornecidos
@@ -65,13 +65,14 @@ public class GerenciadorMemoria {
             return;
         }
         for(int i = 0;i<processo.getIndices().length;i++){
+            //System.out.println(processo.getIndices()[i]);
+            //System.out.println(processo.getIndices().length);
             listaBlocos.get(processo.getIndices()[i]).setLivre(0);//seta valor livre para o bloco i
             listaBlocos.get(processo.getIndices()[i]).setProcessoAssociado(null);
-            
-            //limpa os indices que estavam em processo
-            processo.setIndices(null);
-            
         }
+        //limpa os indices que estavam em processo
+        processo.setIndices(null);
+        
         TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+processo.getNumero()+" Removido da memória com sucesso"
                 + "\nQuantidade de memória disponível: "+ GerenciadorMemoria.memoriaDisponivel(listaBlocos));
     }

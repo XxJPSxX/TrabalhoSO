@@ -10,11 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Despachante{
-        public static Maquina maquina = new Maquina();
+        private static Despachante instancia;
+        //public static Maquina maquina = new Maquina();
+        
         //public Processo[] listaProcessos;
         public static List<Processo> listaProcessos = new ArrayList<Processo>();
         public  List<Processo> filaEntrada = new ArrayList<Processo>();
         public static List<Bloco> listaBlocos = GerenciadorMemoria.criaListaDeBlocos();
+        
+        private Despachante(){
+        }
+        
+        public static synchronized Despachante getInstance(){
+            if(instancia==null){
+                instancia = new Despachante();
+            }
+            return instancia;
+        }
         
         public void checaFilaEntrada(){
             

@@ -383,15 +383,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void botaoProsseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProsseguirActionPerformed
         //if(despachante.listaProcessos == null){
-        if(despachante.listaProcessos.size() == 0){
+        if(Despachante.getInstance().listaProcessos.size() == 0){
             //lista de processos esta vazia, nao pode-se continuar o programa
             JOptionPane.showMessageDialog(null, "Escolha um arquivo de processos válido!\nNão foi possivel detectar processos válidos");
             return;// retorna para nao prosseguir com o tempo
         }else{
             
         }
-        //despachante.testeGerenciadorMemoria();
-        despachante.checaFilaEntrada();
+        Despachante.getInstance().testeGerenciadorMemoria();
+        Despachante.getInstance().checaFilaEntrada();
         momentoAtual++;
         setTextoMomentoAtual(momentoAtual);
     }//GEN-LAST:event_botaoProsseguirActionPerformed
@@ -475,7 +475,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         File f = chooser.getSelectedFile();
         if(f != null){
             filename = f.getAbsolutePath();
-            despachante.listaProcessos = despachante.leArquivoProcessos(filename);
+            Despachante.getInstance().listaProcessos = Despachante.getInstance().leArquivoProcessos(filename);
             //Processo.resetCount();
         }else{
             JOptionPane.showMessageDialog(null, "Você não selecionou um arquivo");
@@ -516,10 +516,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         
-        Thread threadEscalonadorTR = new Thread(escalonadorTR);
+        Thread threadEscalonadorTR = new Thread(EscalonadorTempoReal.getInstance());
         threadEscalonadorTR.start();
         
-        Thread threadEscalonadorU = new Thread(escalonadorU);
+        Thread threadEscalonadorU = new Thread(EscalonadorUsuario.getInstance());
         threadEscalonadorU.start();
     }
 
@@ -560,8 +560,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     public static String filename = "";
     public static int momentoAtual = 0;
-    public static Despachante despachante = new Despachante();
-    public static EscalonadorTempoReal escalonadorTR = new EscalonadorTempoReal();
-    public static EscalonadorUsuario escalonadorU = new EscalonadorUsuario();
+    //public static Despachante despachante = new Despachante();
+    //public static EscalonadorTempoReal escalonadorTR = new EscalonadorTempoReal();
+    //public static EscalonadorUsuario escalonadorU = new EscalonadorUsuario();
 }
 

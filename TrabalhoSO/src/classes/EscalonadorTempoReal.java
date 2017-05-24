@@ -13,10 +13,18 @@ import java.util.List;
  * @author André
  */
 public class EscalonadorTempoReal implements Runnable{
+    private static EscalonadorTempoReal instancia;
     private static List<Processo> filaFCFS = new ArrayList<Processo>();
     
-    public EscalonadorTempoReal(){
+    private EscalonadorTempoReal(){    
         
+    }
+    
+    public static synchronized EscalonadorTempoReal getInstance(){
+        if(instancia==null){
+            instancia = new EscalonadorTempoReal();
+        }
+        return instancia;
     }
     
     public void run(){
