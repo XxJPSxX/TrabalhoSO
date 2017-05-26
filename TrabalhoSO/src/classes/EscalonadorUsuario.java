@@ -47,6 +47,8 @@ public class EscalonadorUsuario implements Runnable{
         }
     }
     
+    //tem que corrigir
+    @Deprecated
     public static void suspendeProcesso(Processo processo){
         int tamanhoProcesso = processo.getMemoria();
         int qtdBlocos = tamanhoProcesso/GerenciadorMemoria.tamanhoBloco; 

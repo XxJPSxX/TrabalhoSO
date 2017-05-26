@@ -9,8 +9,16 @@ public class Maquina {
     private int scanner = 1;
     private int modem = 1;
     private int cdDriver = 2;
-
+    
+    //public int memoriaDisp = memoria;
+    public int impressoraDisp = impressora;
+    public int scannerDisp = scanner;
+    public int modemDisp = modem;
+    public int cdDriverDisp = cdDriver;
+    
+    
     private Maquina() {
+        
     }
     
     public static synchronized Maquina getInstance(){
