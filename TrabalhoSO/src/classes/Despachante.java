@@ -30,74 +30,48 @@ public class Despachante{
         }
         
         private static void checaFilaRotina(List<Processo> lista){
-                List<Processo> aux = new ArrayList<Processo>();
-                
-                //o tamanho da lista pode mudar durante o for
-                //caso haja algum processo que sofra swap-out e entre na fila de suspensos
-                int tam = lista.size();
-                
-                for(int i=0;i<tam;i++){
-                    Processo p = lista.get(i);
-                    if(p.getPrioridade()==0){
+            int tam = lista.size();
+            List<Processo> aux = new ArrayList<Processo>();
+            
+            for(int j=0;j<lista.size();j++){
+                Processo p = lista.get(j);
+                //if(p.getPrioridade()!=0){  //condicao desnecessaria pois assume-se que processos de TR nunca ficam suspensos
+                    if((p.getScanner()<=Maquina.getInstance().scannerDisp)&&(p.getImpressora()<=Maquina.getInstance().impressoraDisp)&&(p.getModem()<=Maquina.getInstance().modemDisp)&&(p.getCdDriver()<=Maquina.getInstance().cdDriverDisp)){
                         int resultado = GerenciadorMemoria.insereProcesso(p, listaBlocos);
+                        
                         if(resultado==0){
-                            EscalonadorTempoReal.getInstance().insereProcesso(p);
+                            EscalonadorUsuario.getInstance().insereProcesso(p);
+                            
+                            Maquina.getInstance().scannerDisp -= p.getScanner();
+                            Maquina.getInstance().impressoraDisp -= p.getImpressora();
+                            Maquina.getInstance().modemDisp -= p.getModem();
+                            Maquina.getInstance().cdDriverDisp -= p.getCdDriver();
+                            
                             aux.add(p);
                         }
                         else{
-                            //e possivel que a memoria esteja cheia
-                            //apenas com processos de TR?
+                            //Se entra um de prioridade 1 e acaba a memoria
+                            //devo tirar um processo de prioridade 3??
                             
-                            EscalonadorUsuario.getInstance().suspendeProcesso(p);
-                            
-                            //insere processo
-                            GerenciadorMemoria.insereProcesso(p, listaBlocos);
-                            EscalonadorTempoReal.getInstance().insereProcesso(p);
-                            aux.add(p);
-                        }
-                    }
-                }
-                //divisao em duas repeticoes 
-                //para colocar na memoria primeiro os processos de TR
-                //diminuindo assim o numero de swap-outs
-                
-                //o tamanho da lista pode mudar durante o for
-                //caso haja algum processo que sofra swap-out e entre na fila de suspensos
-                tam = lista.size();
-                
-                for(int j=0;j<lista.size();j++){
-                    Processo p = lista.get(j);
-                    if(p.getPrioridade()!=0){ 
-                        if((p.getScanner()<=Maquina.getInstance().scannerDisp)&&(p.getImpressora()<=Maquina.getInstance().impressoraDisp)&&(p.getModem()<=Maquina.getInstance().modemDisp)&&(p.getCdDriver()<=Maquina.getInstance().cdDriverDisp)){
-                            int resultado = GerenciadorMemoria.insereProcesso(p, listaBlocos);
-                            if(resultado==0){
-                                EscalonadorUsuario.getInstance().insereProcesso(p);
-                                
-                                Maquina.getInstance().scannerDisp -= p.getScanner();
-                                Maquina.getInstance().impressoraDisp -= p.getImpressora();
-                                Maquina.getInstance().modemDisp -= p.getModem();
-                                Maquina.getInstance().cdDriverDisp -= p.getCdDriver();
-                                
-                                aux.add(p);
-                            }
-                            else{
-                                //Se entra um de prioridade 1 e acaba a memoria
-                                //devo tirar um processo de prioridade 3??
-                                
+                            if(lista==filaEntrada){
                                 listaSuspensos.add(p);
                             }
                         }
-                        else{
+                    }
+                    else{
+                        if(lista==filaEntrada){
                             listaSuspensos.add(p);
                         }
                     }
-                }
-                //tira da fila os processos que foram colocados em memoria
-                for(int k=0;k<aux.size();k++){
-                    lista.remove(aux.get(k));
-                }
+                //}
+            }    
+            //tira da fila os processos que foram colocados em memoria
+            for(int k=0;k<aux.size();k++){
+                lista.remove(aux.get(k));
+            }
         }
         
+        //foi assumido que processos de TR nao podem ficar na fila de suspenso
         public void checaFilaEntrada(){
             
             int atual = TelaPrincipal.getMomentoAtual();
@@ -116,12 +90,46 @@ public class Despachante{
                 }
             }
             
+            if(filaEntrada.size()!=0){
+                List<Processo> auxFE = new ArrayList<Processo>();
+                List<Processo> auxSusp = new ArrayList<Processo>(); 
+                
+                int tam = filaEntrada.size();
+                for(int i=0;i<tam;i++){
+                    Processo p = filaEntrada.get(i);
+                    if(p.getPrioridade()==0){
+                        int resultado = GerenciadorMemoria.insereProcesso(p, listaBlocos);
+                        if(resultado==0){
+                            EscalonadorTempoReal.getInstance().insereProcesso(p);
+                            auxFE.add(p);
+                        }
+                        else{
+                            //e possivel que a memoria esteja cheia
+                            //apenas com processos de TR?
+                            
+                            EscalonadorUsuario.getInstance().abreEspacoMemoria(p);
+                            
+                            //insere processo
+                            GerenciadorMemoria.insereProcesso(p, listaBlocos);
+                            EscalonadorTempoReal.getInstance().insereProcesso(p);
+                            auxFE.add(p);
+                        }
+                    }
+                }
+                for(int k=0;k<auxFE.size();k++){
+                    filaEntrada.remove(auxFE.get(k));
+                }
+            }
+            //divisao em mais de uma repeticao 
+            //para colocar na memoria primeiro os processos de TR
+            //diminuindo assim o numero de swap-outs
+                
             if(listaSuspensos.size()!=0){
                 Despachante.checaFilaRotina(listaSuspensos);
             }
             
             if(filaEntrada.size()!=0){
-                Despachante.checaFilaRotina(filaEntrada);
+                Despachante.checaFilaRotina(listaSuspensos);
             }
         }
         

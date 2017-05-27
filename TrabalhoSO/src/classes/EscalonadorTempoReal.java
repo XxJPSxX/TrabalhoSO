@@ -7,6 +7,7 @@ package classes;
 
 import java.util.ArrayList;
 import java.util.List;
+import view.TelaPrincipal;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public class EscalonadorTempoReal implements Runnable{
     private static EscalonadorTempoReal instancia;
-    private static List<Processo> filaFCFS = new ArrayList<Processo>();
+    public static List<Processo> filaFCFS = new ArrayList<Processo>();
     
     private EscalonadorTempoReal(){    
         
@@ -28,7 +29,45 @@ public class EscalonadorTempoReal implements Runnable{
     }
     
     public void run(){
-        System.out.println("falta fazer ainda");
+        if(filaFCFS.size()!=0){
+            
+            int count = 0;
+            
+            int i = 0;
+            while((i<Maquina.getInstance().listaCPU.length)&&(filaFCFS.size()!=0)){
+                CPU atual = Maquina.getInstance().listaCPU[i];
+                if(atual.ProcessoExecutando==null){
+                    atual.ProcessoExecutando = filaFCFS.get(0);
+                    atual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
+                    filaFCFS.remove(0);
+                }
+                else{
+                    if(atual.ProcessoExecutando.getPrioridade()!=0){
+                        count++;
+                    }
+                }
+                i++;
+            }
+            //dividido em duas repeticoes para ocupar todas as CPUs ociosas primeiro
+            i = 0;
+            if((count!=0)&&(filaFCFS.size()!=0)){
+                while((i<Maquina.getInstance().listaCPU.length)&&(filaFCFS.size()!=0)){
+                    CPU atual = Maquina.getInstance().listaCPU[i];
+                    
+                    if(atual.ProcessoExecutando.getPrioridade()!=0){
+                        int n = atual.ProcessoExecutando.getTempoExec(); //guarda o tempo total que o processo ja foi executado
+                        atual.ProcessoExecutando.setTempoJaExecutado(n);
+                        
+                        atual.ProcessoExecutando = filaFCFS.get(0);
+                        atual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
+                        filaFCFS.remove(0);
+                        //count--;
+                    }
+                    
+                    i++;
+                }
+            }               
+        }    
     }
     
     public static void insereProcesso(Processo processo){

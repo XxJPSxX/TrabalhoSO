@@ -1,8 +1,14 @@
 
 package classes;
 
+import java.util.List;
+
 public class Maquina {
     private static Maquina instancia;
+    
+    private int numeroCPU = 4;
+    //public List<CPU> listaCPU;
+    public CPU listaCPU[] =  new CPU[numeroCPU];
     
     private int memoria = 1024;
     private int impressora = 2;
@@ -18,7 +24,11 @@ public class Maquina {
     
     
     private Maquina() {
-        
+        /*
+        for(int i=0;i<numeroCPU;i++){
+            listaCPU.add(new CPU());
+        }
+        */
     }
     
     public static synchronized Maquina getInstance(){

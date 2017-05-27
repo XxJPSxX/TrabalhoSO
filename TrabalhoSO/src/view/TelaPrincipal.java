@@ -3,6 +3,7 @@ package view;
 import classes.Despachante;
 import classes.EscalonadorTempoReal;
 import classes.EscalonadorUsuario;
+import classes.Maquina;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -508,7 +509,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        Maquina.getInstance();
+        Despachante.getInstance();
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

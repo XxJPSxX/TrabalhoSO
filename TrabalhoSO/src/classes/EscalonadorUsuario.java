@@ -32,7 +32,9 @@ public class EscalonadorUsuario implements Runnable{
     }
     
     public void run(){
-       System.out.println("falta fazer ainda");
+       if(EscalonadorTempoReal.filaFCFS.size()==0){
+           
+       }
     }
     
     public static void insereProcesso(Processo processo){
@@ -49,7 +51,7 @@ public class EscalonadorUsuario implements Runnable{
     
     //tem que corrigir
     @Deprecated
-    public static void suspendeProcesso(Processo processo){
+    public static void abreEspacoMemoria(Processo processo){
         int tamanhoProcesso = processo.getMemoria();
         int qtdBlocos = tamanhoProcesso/GerenciadorMemoria.tamanhoBloco; 
         if(tamanhoProcesso%GerenciadorMemoria.tamanhoBloco != 0){

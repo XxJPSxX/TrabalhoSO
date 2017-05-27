@@ -1,5 +1,7 @@
 package classes;
 
+import view.TelaPrincipal;
+
 
 public class Processo {
     
@@ -15,8 +17,14 @@ public class Processo {
     private int scanner;
     private int modem;
     private int cdDriver;
+    
     private int[] indices;
-
+    //private int tempoRestante;
+    
+    private int tempoInicioExec = -1; //-1 significa que o processo ainda n foi executado nenhuma vez
+    private int tempoPrimeiraExec = -1;
+    private int tempoJaExecutado = 0;
+    
     public Processo(int numero, int momentoChegada, int prioridade, int duracao, int memoria, int impressora, int scanner, int modem, int cdDriver) {
         //n++;
         this.numero = numero;
@@ -120,6 +128,37 @@ public class Processo {
 
     public void setCdDriver(int cdDriver) {
         this.cdDriver = cdDriver;
+    }
+    
+    
+    
+    public int getTempoExec(){
+        return tempoJaExecutado + (TelaPrincipal.momentoAtual - tempoInicioExec);
+    }
+    
+    public int getTempoInicioExec(){
+        return tempoInicioExec;
+    }
+    
+    public void setTempoInicioExec(int n){
+        if(tempoPrimeiraExec==-1){
+            tempoPrimeiraExec = n;
+        }
+        tempoInicioExec = n;
+    }
+    
+    public int getTempoPrimeiraExec(){
+        return tempoPrimeiraExec;
+    }
+    
+    //o setTempoPrimeiraExec esta implicito dentro do setTempoInicio
+    
+    public int getTempoJaExecutado(){
+        return tempoJaExecutado;
+    }
+    
+    public void setTempoJaExecutado(int n){
+        tempoJaExecutado = n;
     }
     
 }
