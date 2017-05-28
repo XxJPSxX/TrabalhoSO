@@ -389,9 +389,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Escolha um arquivo de processos válido!\nNão foi possivel detectar processos válidos");
             return;// retorna para nao prosseguir com o tempo
         }else{
-            
+            Thread threadEscalonadorTR = new Thread(EscalonadorTempoReal.getInstance());
+            threadEscalonadorTR.start();
+
+            Thread threadEscalonadorU = new Thread(EscalonadorUsuario.getInstance());
+            threadEscalonadorU.start();
         }
-        Despachante.getInstance().testeGerenciadorMemoria();
         Despachante.getInstance().checaFilaEntrada();
         momentoAtual++;
         setTextoMomentoAtual(momentoAtual);
@@ -519,12 +522,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 new TelaPrincipal().setVisible(true);
             }
         });
-        
+        /*
         Thread threadEscalonadorTR = new Thread(EscalonadorTempoReal.getInstance());
         threadEscalonadorTR.start();
         
         Thread threadEscalonadorU = new Thread(EscalonadorUsuario.getInstance());
         threadEscalonadorU.start();
+        */
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

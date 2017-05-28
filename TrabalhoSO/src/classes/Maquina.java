@@ -8,8 +8,7 @@ public class Maquina {
     
     private int numeroCPU = 4;
     //public List<CPU> listaCPU;
-    public CPU listaCPU[] =  new CPU[numeroCPU];
-    
+    public CPU listaCPU[] =  new CPU[numeroCPU];    
     private int memoria = 1024;
     private int impressora = 2;
     private int scanner = 1;

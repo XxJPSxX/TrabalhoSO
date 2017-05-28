@@ -179,6 +179,43 @@ public class Despachante{
             }
             
         }
+        public void processa(){ //NÃO TESTADA!!!!!!!!!!!!!!!
+            //incrementa tempo já processado dos processos que tem CPU. 
+            //remove processos que já terminaram de ser executados tempoJaExecutado == duracao
+            //re insere em alguma das filas de feedback os processos que acabaram com o quantumRestante
+            int i=0;
+            int tempoJaExecutadoAtual = 0;
+            Processo processoAtual = null;
+            while(i<Maquina.getInstance().listaCPU.length){
+                processoAtual = Maquina.getInstance().listaCPU[i].ProcessoExecutando;
+                if(processoAtual != null){//se a CPU está executando algum processo
+                    tempoJaExecutadoAtual = processoAtual.getTempoJaExecutado();
+                    processoAtual.setTempoJaExecutado(tempoJaExecutadoAtual++);//incrementa tempo já executado
+                    if(processoAtual.getTempoJaExecutado() == processoAtual.getDuracao()){
+                        //processo já acabou, tem que retirar ele. ANDRE VER SE NÃO TA CONFLITANDO COM O QUE VOCÊ FEZ!!!!
+                        Maquina.getInstance().listaCPU[i].setProcessoExecutando(null, i);//seta CPU i como livre
+                    }
+                    if((processoAtual.getPrioridade() != 0) && Maquina.getInstance().listaCPU[i].ProcessoExecutando != null){
+                        //se não for processo de tempo real ele é de FEEDBACK, então tem que manipular o quantum
+                        int quantumAtual = Maquina.getInstance().listaCPU[i].ProcessoExecutando.getQuantumRestante();
+                        Maquina.getInstance().listaCPU[i].ProcessoExecutando.setQuantumRestante(quantumAtual--);
+                        if(Maquina.getInstance().listaCPU[i].ProcessoExecutando.getQuantumRestante() == 0){
+                            //se quantum restante é zero ele tem que voltar pra fila de feedback, como está depois do if que verifica se já acabou ele tem que realmente voltar pra fila
+                            //Prioridade simbolica é utilizada para controlar em que fila o processo vai entrar
+                            int prioridadeSimbolica = Maquina.getInstance().listaCPU[i].ProcessoExecutando.getPrioridadeSimbolica();
+                            prioridadeSimbolica++;
+                            if(prioridadeSimbolica == 4){
+                                prioridadeSimbolica = 1;//se atingir 4 tem que voltar pra fila 1
+                            }
+                            Maquina.getInstance().listaCPU[i].ProcessoExecutando.setPrioridadeSimbolica(prioridadeSimbolica);
+                            //processo já está em memória então não precisa ser inserido novamente, pode-se inserir na fila de feedback direto
+                            EscalonadorTempoReal.getInstance().insereProcesso(Maquina.getInstance().listaCPU[i].ProcessoExecutando);
+                        }
+                    }
+                }
+            }
+        }
+        /*
         public void testeGerenciadorMemoria(){
             System.out.println("Tamanho do array de blocos: "+listaBlocos.size());
             System.out.println("Quantidade de blocos: "+GerenciadorMemoria.memoriaDisponivel(listaBlocos)/32);
@@ -202,5 +239,6 @@ public class Despachante{
             System.out.println("Quantidade de blocos: "+GerenciadorMemoria.memoriaDisponivel(listaBlocos)/32);
             System.out.println("Quantidade de memória disponível: "+ GerenciadorMemoria.memoriaDisponivel(listaBlocos));
         }
+        */
 }
 

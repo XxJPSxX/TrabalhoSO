@@ -11,6 +11,7 @@ public class Processo {
     //private String nome;
     private int momentoChegada;
     private int prioridade; // 0 = tempo real != 0 = usuarios, quanto maior o valor menos prioridade
+    private int prioridadeSimbolica; //Prioridade simbolica é utilizada para controlar em que fila o processo vai entrar, ela será alterada durante a execucao
     private int duracao;
     private int memoria;
     private int impressora;//0 = não usa
@@ -24,12 +25,14 @@ public class Processo {
     private int tempoInicioExec = -1; //-1 significa que o processo ainda n foi executado nenhuma vez
     private int tempoPrimeiraExec = -1;
     private int tempoJaExecutado = 0;
+    private int quantumRestante = 0;
     
     public Processo(int numero, int momentoChegada, int prioridade, int duracao, int memoria, int impressora, int scanner, int modem, int cdDriver) {
         //n++;
         this.numero = numero;
         this.momentoChegada = momentoChegada;
         this.prioridade = prioridade;
+        this.prioridadeSimbolica = prioridade;
         this.duracao = duracao;
         this.memoria = memoria;
         this.impressora = impressora;
@@ -41,7 +44,7 @@ public class Processo {
 
     @Override
     public String toString() {
-        return "Processo " +numero + "{ momentoChegada=" + momentoChegada + ", prioridade=" + prioridade + ", duracao=" + duracao + ", memoria=" + memoria + ", impressora=" + impressora + ", scanner=" + scanner + ", modem=" + modem + ", cdDriver=" + cdDriver + '}';
+        return "Processo " +numero + "{ momentoChegada=" + momentoChegada + ", prioridade=" + prioridade + ", duracao=" + duracao + ", memoria=" + memoria + ", impressora=" + impressora + ", scanner=" + scanner + ", modem=" + modem + ", cdDriver=" + cdDriver + "Prioridade fake= "+ prioridadeSimbolica+'}';
     }
     
     /*
@@ -160,5 +163,22 @@ public class Processo {
     public void setTempoJaExecutado(int n){
         tempoJaExecutado = n;
     }
+
+    public int getQuantumRestante() {
+        return quantumRestante;
+    }
+
+    public void setQuantumRestante(int quantumRestante) {
+        this.quantumRestante = quantumRestante;
+    }
+
+    public int getPrioridadeSimbolica() {
+        return prioridadeSimbolica;
+    }
+
+    public void setPrioridadeSimbolica(int prioridadeSimbolica) {
+        this.prioridadeSimbolica = prioridadeSimbolica;
+    }
+    
     
 }
