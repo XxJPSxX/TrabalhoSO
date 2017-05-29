@@ -385,9 +385,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void botaoProsseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProsseguirActionPerformed
         //if(despachante.listaProcessos == null){
         if(Despachante.getInstance().listaProcessos.size() == 0){
-            //lista de processos esta vazia, nao pode-se continuar o programa
-            JOptionPane.showMessageDialog(null, "Escolha um arquivo de processos válido!\nNão foi possivel detectar processos válidos");
-            return;// retorna para nao prosseguir com o tempo
+            if(momentoAtual == 0){
+                JOptionPane.showMessageDialog(null, "Escolha um arquivo de processos válido!\nNão foi possivel detectar processos válidos");
+                return;
+            }
         }else{
             Thread threadEscalonadorTR = new Thread(EscalonadorTempoReal.getInstance());
             threadEscalonadorTR.start();

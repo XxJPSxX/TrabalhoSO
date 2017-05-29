@@ -209,7 +209,7 @@ public class Despachante{
                             }
                             Maquina.getInstance().listaCPU[i].ProcessoExecutando.setPrioridadeSimbolica(prioridadeSimbolica);
                             //processo já está em memória então não precisa ser inserido novamente, pode-se inserir na fila de feedback direto
-                            EscalonadorTempoReal.getInstance().insereProcesso(Maquina.getInstance().listaCPU[i].ProcessoExecutando);
+                            EscalonadorUsuario.getInstance().insereProcesso(Maquina.getInstance().listaCPU[i].ProcessoExecutando);
                         }
                     }
                 }
