@@ -1,14 +1,16 @@
 
 package classes;
 
+import java.util.ArrayList;
 import java.util.List;
+import view.TelaPrincipal;
 
 public class Maquina {
     private static Maquina instancia;
     
     private int numeroCPU = 4;
-    //public List<CPU> listaCPU;
-    public CPU listaCPU[] =  new CPU[numeroCPU];    
+    public List<CPU> listaCPU = new ArrayList<>();
+    //public CPU listaCPU[] =  new CPU[numeroCPU];    
     private int memoria = 1024;
     private int impressora = 2;
     private int scanner = 1;
@@ -23,11 +25,9 @@ public class Maquina {
     
     
     private Maquina() {
-        /*
         for(int i=0;i<numeroCPU;i++){
             listaCPU.add(new CPU());
         }
-        */
     }
     
     public static synchronized Maquina getInstance(){
@@ -35,6 +35,24 @@ public class Maquina {
             instancia = new Maquina();   
         }
         return instancia;
+    }
+    
+    public void checaProcessos(){
+        List<CPU> listaCPU = Maquina.getInstance().listaCPU;
+        for(int i=0;i<listaCPU.size();i++){
+            Processo p = listaCPU.get(i).ProcessoExecutando;
+            if((p!=null)&&(p.getTempoExec()==p.getDuracao())){
+                //System.out.println("Processo "+p.getNumero()+"terminado");
+                TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" concluído ");
+                
+                listaCPU.get(i).setProcessoExecutando(null, i);
+                Maquina.getInstance().scannerDisp += p.getScanner();
+                Maquina.getInstance().impressoraDisp += p.getImpressora();
+                Maquina.getInstance().modemDisp += p.getModem();
+                Maquina.getInstance().cdDriverDisp += p.getCdDriver();
+                GerenciadorMemoria.removeProcesso(p, Despachante.listaBlocos);
+            }
+        }
     }
     
     public int getMemoria() {

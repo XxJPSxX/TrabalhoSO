@@ -42,7 +42,7 @@ public class EscalonadorUsuario implements Runnable{
                if(NumCpuAtual == -1){
                   return;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
                }else{
-                   cpuAtual= Maquina.getInstance().listaCPU[NumCpuAtual];
+                   cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    int contador = 0;
                    while((cpuAtual != null) && filaFeed1.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
                         cpuAtual.setProcessoExecutando(filaFeed1.get(contador), NumCpuAtual);
@@ -52,7 +52,7 @@ public class EscalonadorUsuario implements Runnable{
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
                         }
-                        cpuAtual= Maquina.getInstance().listaCPU[NumCpuAtual];
+                        cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    }
                    if(NumCpuAtual == -1){
                        //saiu porque não tinha mais CPU's livres, logo não tem mais nada para o escalonador fazer
@@ -66,7 +66,7 @@ public class EscalonadorUsuario implements Runnable{
                if(NumCpuAtual == -1){
                   return;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
                }else{
-                   cpuAtual= Maquina.getInstance().listaCPU[NumCpuAtual];
+                   cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    int contador = 0;
                    while((cpuAtual != null) && filaFeed2.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
                         cpuAtual.setProcessoExecutando(filaFeed2.get(contador), NumCpuAtual);
@@ -76,7 +76,7 @@ public class EscalonadorUsuario implements Runnable{
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
                         }
-                        cpuAtual= Maquina.getInstance().listaCPU[NumCpuAtual];
+                        cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    }
                    if(NumCpuAtual == -1){
                        //saiu porque não tinha mais CPU's livres, logo não tem mais nada para o escalonador fazer
@@ -90,7 +90,7 @@ public class EscalonadorUsuario implements Runnable{
                if(NumCpuAtual == -1){
                   return;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
                }else{
-                   cpuAtual= Maquina.getInstance().listaCPU[NumCpuAtual];
+                   cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    int contador = 0;
                    while((cpuAtual != null) && filaFeed3.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
                         cpuAtual.setProcessoExecutando(filaFeed3.get(contador), NumCpuAtual);
@@ -100,7 +100,7 @@ public class EscalonadorUsuario implements Runnable{
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
                         }
-                        cpuAtual= Maquina.getInstance().listaCPU[NumCpuAtual];
+                        cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    }
                    if(NumCpuAtual == -1){
                        //saiu porque não tinha mais CPU's livres, logo não tem mais nada para o escalonador fazer
@@ -143,8 +143,8 @@ public class EscalonadorUsuario implements Runnable{
     }
     private int proximaCPULivre(){//se retorna -1 nenhuma CPU está livre
         int i=0;
-        while(i<Maquina.getInstance().listaCPU.length){
-            CPU atual = Maquina.getInstance().listaCPU[i];
+        while(i<Maquina.getInstance().listaCPU.size()){
+            CPU atual = Maquina.getInstance().listaCPU.get(i);
             if(atual.ProcessoExecutando == null){
                 return i;
             }

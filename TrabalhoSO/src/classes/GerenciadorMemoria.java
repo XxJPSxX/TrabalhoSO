@@ -45,7 +45,7 @@ public class GerenciadorMemoria {
                 contador++;
             }
         }
-        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+processo.getNumero()+" Insiderido com sucesso"
+        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+processo.getNumero()+" Inserido com sucesso"
                 + "\nQuantidade de memória disponível: "+ GerenciadorMemoria.memoriaDisponivel(listaBlocos));
         processo.setIndices(indices);
         return 0;

@@ -34,8 +34,8 @@ public class EscalonadorTempoReal implements Runnable{
             int count = 0;
             
             int i = 0;
-            while((i<Maquina.getInstance().listaCPU.length)&&(filaFCFS.size()!=0)){
-                CPU atual = Maquina.getInstance().listaCPU[i];
+            while((i<Maquina.getInstance().listaCPU.size())&&(filaFCFS.size()!=0)){
+                CPU atual = Maquina.getInstance().listaCPU.get(i);
                 if(atual.ProcessoExecutando==null){
                     atual.setProcessoExecutando(filaFCFS.get(0), i);
                     
@@ -52,8 +52,8 @@ public class EscalonadorTempoReal implements Runnable{
             //dividido em duas repeticoes para ocupar todas as CPUs ociosas primeiro
             i = 0;
             if((count!=0)&&(filaFCFS.size()!=0)){
-                while((i<Maquina.getInstance().listaCPU.length)&&(filaFCFS.size()!=0)){
-                    CPU atual = Maquina.getInstance().listaCPU[i];
+                while((i<Maquina.getInstance().listaCPU.size())&&(filaFCFS.size()!=0)){
+                    CPU atual = Maquina.getInstance().listaCPU.get(i);
                     
                     if(atual.ProcessoExecutando.getPrioridade()!=0){
                         int n = atual.ProcessoExecutando.getTempoExec(); //guarda o tempo total que o processo ja foi executado
