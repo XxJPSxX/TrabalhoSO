@@ -64,6 +64,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         textoFilaFeed2 = new javax.swing.JTextField();
         textoFilaFeed3 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        textoFilaSuspensos = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
 
         jLabel13.setText("1");
@@ -238,12 +240,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(135, 135, 135)
+                        .addComponent(jButton1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,6 +279,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         textoFilaFeed3.setEditable(false);
 
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel17.setText("Fila suspensos");
+
+        textoFilaSuspensos.setEditable(false);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -282,6 +291,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
@@ -291,15 +303,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             .addComponent(textoFilaFeed1)
                             .addComponent(textoFilaFCFS, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                             .addComponent(textoFilaFeed2)
+                            .addComponent(textoFilaFeed3)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel17)
                                     .addComponent(jLabel8)
-                                    .addComponent(jLabel9))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(textoFilaFeed3)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(jLabel9)
+                                    .addComponent(textoFilaSuspensos))
+                                .addContainerGap())))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,6 +333,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
                     .addComponent(textoFilaFeed3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel17)
+                .addGap(18, 18, 18)
+                .addComponent(textoFilaSuspensos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -404,6 +419,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoProsseguirActionPerformed
     public static int getMomentoAtual(){
         return momentoAtual;
+    }
+    public static void setTextoFilaSuspesos(String texto){
+        textoFilaSuspensos.setText(texto);
+    }
+    public static String getTextoFilaSuspensos(){
+        return textoFilaSuspensos.getText();
     }
     public static void setTextoMomentoAtual(int momento){
         textoMomentoAtual.setText(""+momento);
@@ -545,6 +566,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -562,6 +584,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public static javax.swing.JTextField textoFilaFeed1;
     public static javax.swing.JTextField textoFilaFeed2;
     public static javax.swing.JTextField textoFilaFeed3;
+    public static javax.swing.JTextField textoFilaSuspensos;
     public static javax.swing.JTextArea textoLog;
     public static javax.swing.JLabel textoMomentoAtual;
     public static javax.swing.JTextField textoProcessadorA;
