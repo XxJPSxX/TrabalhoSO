@@ -51,11 +51,23 @@ public class Despachante{
                             aux.add(p);
                         }
                         else{
-                            //Se entra um de prioridade 1 e acaba a memoria
-                            //devo tirar um processo de prioridade 3??
+                            //todo processo que nao esta em memoria
+                            //e colocado em memoria baseado em sua prioridade original   
                             
-                            if(lista==filaEntrada){
-                                listaSuspensos.add(p);
+                            int n = EscalonadorUsuario.abreEspacoMemoria(p);
+                            
+                            if(n==0){
+                                int i = GerenciadorMemoria.insereProcesso(p, listaBlocos);
+                                //if(resultado==0){ condicao desnecessaria pois o espaço ja foi liberado
+                                    EscalonadorUsuario.getInstance().insereProcesso(p);
+                                    aux.add(p);
+                                //}
+                        
+                            }
+                            else{ //entao nao conseguiu alocar memoria
+                                if(lista==filaEntrada){
+                                    listaSuspensos.add(p);
+                                }
                             }
                         }
                     }

@@ -125,9 +125,26 @@ public class EscalonadorUsuario implements Runnable{
         }
     }
     
-    //tem que corrigir
-    @Deprecated
-    public static void abreEspacoMemoria(Processo processo){
+    private static int abreEspacoRotina(int blocos,List<Processo> fila){
+        while((blocos>0)&&(fila.size()!=0)){
+            Processo p = fila.get(fila.size()-1); //pega o ultimo processo da fila
+            blocos = blocos - p.getIndices().length;
+                
+            fila.remove(p);
+            GerenciadorMemoria.removeProcesso(p, Despachante.listaBlocos);
+            Maquina.getInstance().scannerDisp += p.getScanner();
+            Maquina.getInstance().impressoraDisp += p.getImpressora();
+            Maquina.getInstance().modemDisp += p.getModem();
+            Maquina.getInstance().cdDriverDisp += p.getCdDriver();
+                    
+            Despachante.listaSuspensos.add(p);
+        }
+        return blocos;
+    }
+    
+    public static int abreEspacoMemoria(Processo processo){
+        //retorna 0 caso seja um sucesso
+        //retorna 1 caso nao consiga liberar memoria
         int tamanhoProcesso = processo.getMemoria();
         int qtdBlocos = tamanhoProcesso/GerenciadorMemoria.tamanhoBloco; 
         if(tamanhoProcesso%GerenciadorMemoria.tamanhoBloco != 0){
@@ -135,12 +152,37 @@ public class EscalonadorUsuario implements Runnable{
         }
         
         int t = qtdBlocos;
-        while(t>0){
-            Processo p = filaFeed3.get((filaFeed3.size()-1)); //pega o ultimo processo a entrar na fila 3
-            t = t - p.getIndices().length;
-            GerenciadorMemoria.removeProcesso(p, Despachante.listaBlocos);
+        switch(processo.getPrioridade()){
+            case 0:
+                abreEspacoRotina(t,filaFeed3);
+                if(t>0) 
+                    abreEspacoRotina(t,filaFeed2);
+                if(t>0) 
+                    abreEspacoRotina(t,filaFeed1);
+                if(t>0){
+                    return -1; //nao conseguiu memoria 
+                }
+                break;
+            case 1:
+                abreEspacoRotina(t,filaFeed3);
+                if(t>0) 
+                    abreEspacoRotina(t,filaFeed2);
+                if(t>0){
+                    return -1; //nao conseguiu memoria 
+                }
+                break;
+            case 2:
+                abreEspacoRotina(t,filaFeed3);
+                if(t>0){
+                    return -1; //nao conseguiu memoria 
+                }
+                break;
+            case 3:
+                return -1;
         }
+        return 0;
     }
+    
     private int proximaCPULivre(){//se retorna -1 nenhuma CPU está livre
         int i=0;
         while(i<Maquina.getInstance().listaCPU.size()){
