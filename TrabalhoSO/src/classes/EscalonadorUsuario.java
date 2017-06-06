@@ -125,6 +125,49 @@ public class EscalonadorUsuario implements Runnable{
         }
     }
     
+    private static int checaMemoriaFila(List<Processo> fila){
+        int qtdBlocos = 0;
+        for(int i=0;i<fila.size();i++){
+            qtdBlocos += fila.get(i).getIndices().length;
+        }
+        return qtdBlocos*GerenciadorMemoria.tamanhoBloco;
+    }
+    
+    //checa a memoria que pode estar disponivel ao processo baseada em sua prioridade
+    private static boolean checaMemoria(Processo processo){
+        int sum = 0;
+        switch(processo.getPrioridade()){
+            case 0:
+                sum += GerenciadorMemoria.memoriaDisponivel(Despachante.listaBlocos);
+                sum += checaMemoriaFila(filaFeed3);
+                sum += checaMemoriaFila(filaFeed2);
+                sum += checaMemoriaFila(filaFeed1);
+                if(processo.getMemoria() <= sum)
+                    return true;
+                break;
+            case 1:
+                sum += GerenciadorMemoria.memoriaDisponivel(Despachante.listaBlocos);
+                sum += checaMemoriaFila(filaFeed3);
+                sum += checaMemoriaFila(filaFeed2);
+                if(processo.getMemoria() <= sum)
+                    return true;
+                break;
+            case 2:
+                sum += GerenciadorMemoria.memoriaDisponivel(Despachante.listaBlocos);
+                sum += checaMemoriaFila(filaFeed3);
+                if(processo.getMemoria() <= sum)
+                    return true;
+                break;
+            /*case 3:  a funcao nao e chamada para processos de prioridade 3
+                sum += GerenciadorMemoria.memoriaDisponivel(Despachante.listaBlocos);
+                if(processo.getMemoria() <= sum)
+                    return true;
+                break;
+            */
+        }
+        return false;
+    }
+    
     private static int abreEspacoRotina(int blocos,List<Processo> fila){
         while((blocos>0)&&(fila.size()!=0)){
             Processo p = fila.get(fila.size()-1); //pega o ultimo processo da fila
@@ -155,27 +198,42 @@ public class EscalonadorUsuario implements Runnable{
         int t = qtdBlocos;
         switch(processo.getPrioridade()){
             case 0:
-                abreEspacoRotina(t,filaFeed3);
-                if(t>0) 
-                    abreEspacoRotina(t,filaFeed2);
-                if(t>0) 
-                    abreEspacoRotina(t,filaFeed1);
-                if(t>0){
-                    return -1; //nao conseguiu memoria 
+                if(checaMemoria(processo)){
+                    abreEspacoRotina(t,filaFeed3);
+                    if(t>0) 
+                        abreEspacoRotina(t,filaFeed2);
+                    if(t>0) 
+                        abreEspacoRotina(t,filaFeed1);
+                    if(t>0){
+                        return -1; //nao conseguiu memoria 
+                    }
+                }
+                else{
+                    return -1; //nao ha memoria disponivel mesmo retirando processos
                 }
                 break;
             case 1:
-                abreEspacoRotina(t,filaFeed3);
-                if(t>0) 
-                    abreEspacoRotina(t,filaFeed2);
-                if(t>0){
-                    return -1; //nao conseguiu memoria 
+                if(checaMemoria(processo)){
+                    abreEspacoRotina(t,filaFeed3);
+                    if(t>0) 
+                        abreEspacoRotina(t,filaFeed2);
+                    if(t>0){
+                        return -1; //nao conseguiu memoria 
+                    }
+                }
+                else{
+                    return -1;
                 }
                 break;
             case 2:
-                abreEspacoRotina(t,filaFeed3);
-                if(t>0){
-                    return -1; //nao conseguiu memoria 
+                if(checaMemoria(processo)){
+                    abreEspacoRotina(t,filaFeed3);
+                    if(t>0){
+                        return -1; //nao conseguiu memoria 
+                    }
+                }
+                else{
+                    return -1;
                 }
                 break;
             case 3:

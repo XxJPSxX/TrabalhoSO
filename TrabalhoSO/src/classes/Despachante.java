@@ -67,6 +67,7 @@ public class Despachante{
                             else{ //entao nao conseguiu alocar memoria
                                 if(lista==filaEntrada){
                                     listaSuspensos.add(p);
+                                    aux.add(p);
                                     TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.getTextoFilaSuspensos()+"; "+p.getNumero());
                                 }
                             }
@@ -75,12 +76,13 @@ public class Despachante{
                     else{
                         if(lista==filaEntrada){
                             listaSuspensos.add(p);
+                            aux.add(p);
                             TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.getTextoFilaSuspensos()+"; "+p.getNumero());
                         }
                     }
                 //}
             }    
-            //tira da fila os processos que foram colocados em memoria
+            //tira da fila os processos que foram colocados em memoria (ou em outra fila)
             for(int k=0;k<aux.size();k++){
                 lista.remove(aux.get(k));
             }

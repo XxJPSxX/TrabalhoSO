@@ -20,7 +20,7 @@ public class Processo {
     private int cdDriver;
     private int cpuAlocada;
     
-    private int[] indices;
+    private int[] indices; //indices dos blocos de memoria em que o processo esta alocado
     //private int tempoRestante;
     
     private int tempoInicioExec = -1; //-1 significa que o processo ainda n foi executado nenhuma vez
