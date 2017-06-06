@@ -138,6 +138,7 @@ public class EscalonadorUsuario implements Runnable{
             Maquina.getInstance().cdDriverDisp += p.getCdDriver();
                     
             Despachante.listaSuspensos.add(p);
+            TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.getTextoFilaSuspensos()+"; "+p.getNumero());
         }
         return blocos;
     }

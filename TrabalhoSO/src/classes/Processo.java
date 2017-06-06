@@ -18,6 +18,7 @@ public class Processo {
     private int scanner;
     private int modem;
     private int cdDriver;
+    private int cpuAlocada;
     
     private int[] indices;
     //private int tempoRestante;
@@ -53,6 +54,14 @@ public class Processo {
     }
     */
     
+    public void setCpuAlocada(int cpuAlocada) {
+        this.cpuAlocada = cpuAlocada;
+    }
+
+    public int getCpuAlocada() {
+        return cpuAlocada;
+    }
+
     public int[] getIndices() {
         return indices;
     }

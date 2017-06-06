@@ -29,16 +29,20 @@ public class CPU {
         switch(numeroCPU){
             case 0: TelaPrincipal.setTextoProcessadorA(""+ProcessoExecutando.getNumero());
                     TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU "+numeroCPU);
-                break;
+                    ProcessoExecutando.setCpuAlocada(numeroCPU);
+                    break;
             case 1: TelaPrincipal.setTextoProcessadorB(""+ProcessoExecutando.getNumero());
                     TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU "+numeroCPU);
-                break;
+                    ProcessoExecutando.setCpuAlocada(numeroCPU);
+                    break;
             case 2: TelaPrincipal.setTextoProcessadorC(""+ProcessoExecutando.getNumero());
                     TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU "+numeroCPU);
-                break;
+                    ProcessoExecutando.setCpuAlocada(numeroCPU);
+                    break;
             case 3: TelaPrincipal.setTextoProcessadorD(""+ProcessoExecutando.getNumero());
                     TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU "+numeroCPU);
-                break;
+                    ProcessoExecutando.setCpuAlocada(numeroCPU);
+                    break;
             
         }
         

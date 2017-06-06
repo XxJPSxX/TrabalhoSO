@@ -67,6 +67,7 @@ public class Despachante{
                             else{ //entao nao conseguiu alocar memoria
                                 if(lista==filaEntrada){
                                     listaSuspensos.add(p);
+                                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.getTextoFilaSuspensos()+"; "+p.getNumero());
                                 }
                             }
                         }
@@ -74,6 +75,7 @@ public class Despachante{
                     else{
                         if(lista==filaEntrada){
                             listaSuspensos.add(p);
+                            TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.getTextoFilaSuspensos()+"; "+p.getNumero());
                         }
                     }
                 //}
@@ -206,7 +208,35 @@ public class Despachante{
                     processoAtual.setTempoJaExecutado(tempoJaExecutadoAtual++);//incrementa tempo já executado
                     if(processoAtual.getTempoJaExecutado() == processoAtual.getDuracao()){
                         //processo já acabou, tem que retirar ele. ANDRE VER SE NÃO TA CONFLITANDO COM O QUE VOCÊ FEZ!!!!
+                        //remove texto da Tela que indica que a CPU i está executando algum processo
+                        switch(i){
+                            case 0:
+                                TelaPrincipal.setTextoProcessadorA("");
+                                TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"CPU "+i+" livre");
+                                break;
+                            case 1:
+                                TelaPrincipal.setTextoProcessadorA("");
+                                TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"CPU "+i+" livre");
+
+                                break;
+                            case 2:
+                                TelaPrincipal.setTextoProcessadorA("");
+                                TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"CPU "+i+" livre");
+                                break;
+                            case 3:
+                                TelaPrincipal.setTextoProcessadorA("");
+                                TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"CPU "+i+" livre");
+                                break;
+                        }
+                        Maquina.getInstance().scannerDisp += processoAtual.getScanner();
+                        Maquina.getInstance().impressoraDisp += processoAtual.getImpressora();
+                        Maquina.getInstance().modemDisp += processoAtual.getModem();
+                        Maquina.getInstance().cdDriverDisp += processoAtual.getCdDriver();
+                        GerenciadorMemoria.removeProcesso(processoAtual, Despachante.listaBlocos);
                         Maquina.getInstance().listaCPU.get(i).setProcessoExecutando(null, i);//seta CPU i como livre
+                        
+                        //remove texto da Tela que indica que a CPU i está executando algum processo
+
                     }
                     if((processoAtual.getPrioridade() != 0) && Maquina.getInstance().listaCPU.get(i).ProcessoExecutando != null){
                         //se não for processo de tempo real ele é de FEEDBACK, então tem que manipular o quantum
