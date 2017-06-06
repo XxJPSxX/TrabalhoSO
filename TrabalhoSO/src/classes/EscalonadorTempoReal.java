@@ -17,6 +17,8 @@ public class EscalonadorTempoReal implements Runnable{
     private static EscalonadorTempoReal instancia;
     public static List<Processo> filaFCFS = new ArrayList<Processo>();
     
+    public static boolean terminou = false;
+    
     private EscalonadorTempoReal(){    
         
     }
@@ -68,7 +70,9 @@ public class EscalonadorTempoReal implements Runnable{
                     i++;
                 }
             }               
-        }    
+        }
+        terminou = true;
+        Observador.startEscalonadorU();
     }
     
     public static void insereProcesso(Processo processo){

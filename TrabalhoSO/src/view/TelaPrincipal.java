@@ -412,10 +412,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Despachante.getInstance().checaFilaEntrada();
         
         Thread threadEscalonadorTR = new Thread(EscalonadorTempoReal.getInstance());
+        EscalonadorTempoReal.terminou = false; // indica que a thread ainda nao foi executada
         threadEscalonadorTR.start();
-
-        Thread threadEscalonadorU = new Thread(EscalonadorUsuario.getInstance());
-        threadEscalonadorU.start();
+        
+        //Thread do EscalonadorU ativada pelo observador
+        // ...
+        //Thread threadEscalonadorU = new Thread(EscalonadorUsuario.getInstance());
+        //threadEscalonadorU.start();
     }//GEN-LAST:event_botaoProsseguirActionPerformed
     public static int getMomentoAtual(){
         return momentoAtual;
