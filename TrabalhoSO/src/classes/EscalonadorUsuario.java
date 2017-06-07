@@ -55,8 +55,9 @@ public class EscalonadorUsuario implements Runnable{
                    while((cpuAtual != null) && filaFeed1.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
                         cpuAtual.setProcessoExecutando(filaFeed1.get(contador), NumCpuAtual);
                         cpuAtual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
+                        cpuAtual.ProcessoExecutando.setQuantumRestante((int) Math.pow(quantum,1));
                         filaFeed1.remove(0);
-                        TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed1));
+                        TelaPrincipal.setTextoFilaFeed(TelaPrincipal.listToString(filaFeed1));
                         NumCpuAtual = proximaCPULivre();
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
@@ -80,8 +81,9 @@ public class EscalonadorUsuario implements Runnable{
                    while((cpuAtual != null) && filaFeed2.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
                         cpuAtual.setProcessoExecutando(filaFeed2.get(contador), NumCpuAtual);
                         cpuAtual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
+                        cpuAtual.ProcessoExecutando.setQuantumRestante((int) Math.pow(quantum,2));
                         filaFeed2.remove(0);
-                        TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed2));
+                        TelaPrincipal.setTextoFilaFeed2(TelaPrincipal.listToString(filaFeed2));
                         NumCpuAtual = proximaCPULivre();
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
@@ -105,8 +107,9 @@ public class EscalonadorUsuario implements Runnable{
                    while((cpuAtual != null) && filaFeed3.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
                         cpuAtual.setProcessoExecutando(filaFeed3.get(contador), NumCpuAtual);
                         cpuAtual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
+                        cpuAtual.ProcessoExecutando.setQuantumRestante((int) Math.pow(quantum,3));
                         filaFeed3.remove(0);
-                        TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed3));
+                        TelaPrincipal.setTextoFilaFeed3(TelaPrincipal.listToString(filaFeed3));
                         NumCpuAtual = proximaCPULivre();
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.

@@ -93,6 +93,7 @@ public class Despachante{
             for(int k=0;k<aux.size();k++){
                 lista.remove(aux.get(k));
             }
+            TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(listaSuspensos));
         }
         
         //foi assumido que processos de TR nao podem ficar na fila de suspenso
@@ -203,6 +204,8 @@ public class Despachante{
             }
             
         }
+        
+        @Deprecated
         public void processa(){ //NÃO TESTADA!!!!!!!!!!!!!!!
             //incrementa tempo já processado dos processos que tem CPU. 
             //remove processos que já terminaram de ser executados tempoJaExecutado == duracao

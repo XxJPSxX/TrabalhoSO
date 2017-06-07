@@ -38,7 +38,7 @@ public class EscalonadorTempoReal implements Runnable{
     public void run(){
         if(filaFCFS.size()!=0){
             
-            int count = 0;
+            int count = 0; //conta o numero de CPU's executando processos de usuario
             
             int i = 0;
             while((i<Maquina.getInstance().listaCPU.size())&&(filaFCFS.size()!=0)){
@@ -47,9 +47,7 @@ public class EscalonadorTempoReal implements Runnable{
                     atual.setProcessoExecutando(filaFCFS.get(0), i);
                     
                     atual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
-                    filaFCFS.remove(0);
-                    System.out.println("REMOVEU");
-                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFCFS));
+                    removeProcessoFCFS(filaFCFS.get(0));
                 }
                 else{
                     if(atual.ProcessoExecutando.getPrioridade()!=0){
@@ -68,11 +66,19 @@ public class EscalonadorTempoReal implements Runnable{
                         int n = atual.ProcessoExecutando.getTempoExec(); //guarda o tempo total que o processo ja foi executado
                         atual.ProcessoExecutando.setTempoJaExecutado(n);
                         
+                        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+atual.ProcessoExecutando.getNumero()+" interrompido ");
+                        
+                        Processo p = atual.ProcessoExecutando;
+                        if(p.getPrioridadeSimbolica()<3)
+                            p.setPrioridadeSimbolica(p.getPrioridadeSimbolica()+1);
+                        else
+                            p.setPrioridadeSimbolica(1);
+                        EscalonadorUsuario.insereProcesso(p);
+
+                        
                         atual.setProcessoExecutando(filaFCFS.get(0), i);
                         atual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
-                        filaFCFS.remove(0);
-                        System.out.println("REMOVEU");
-                        TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFCFS));
+                        removeProcessoFCFS(filaFCFS.get(0));
                         //count--;
                     }
                     
@@ -87,5 +93,11 @@ public class EscalonadorTempoReal implements Runnable{
     public static void insereProcesso(Processo processo){
         filaFCFS.add(processo);
         TelaPrincipal.setTextoFilaFCFS(TelaPrincipal.listToString(filaFCFS));
+    }
+    
+    private static void removeProcessoFCFS(Processo processo){
+        filaFCFS.remove(processo);
+        TelaPrincipal.setTextoFilaFCFS(TelaPrincipal.listToString(filaFCFS));
+        System.out.println(TelaPrincipal.listToString(filaFCFS)+"AAAAA");
     }
 }

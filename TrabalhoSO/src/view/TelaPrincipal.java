@@ -408,7 +408,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         momentoAtual++;
         setTextoMomentoAtual(momentoAtual);
-        setTextoLog(getTextoLog()+"\nMomento: "+momentoAtual+"\nProcessos executando:");
+        setTextoLog(getTextoLog()+"\n\nMomento: "+momentoAtual+"\nProcessos executando:");
         int contador = 0;
         for(int i=0;i<Maquina.getInstance().listaCPU.size();i++){
             if(Maquina.getInstance().listaCPU.get(i).ProcessoExecutando != null){
@@ -417,10 +417,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             } 
         }
         if(contador == 0){
-            setTextoLog(getTextoLog()+"\nNenhum processo sendo executado no momento atual");
+            setTextoLog(getTextoLog()+"\nNenhum processo sendo executado no momento");
         }
         
         Maquina.getInstance().checaProcessos();
+        //Despachante.getInstance().processa();
         
         Despachante.getInstance().checaFilaEntrada();
         

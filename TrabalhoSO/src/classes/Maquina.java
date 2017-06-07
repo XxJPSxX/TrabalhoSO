@@ -57,6 +57,7 @@ public class Maquina {
         List<CPU> listaCPU = Maquina.getInstance().listaCPU;
         for(int i=0;i<listaCPU.size();i++){
             Processo p = listaCPU.get(i).ProcessoExecutando;
+            
             if((p!=null)&&(p.getTempoExec()==p.getDuracao())){
                 //System.out.println("Processo "+p.getNumero()+"terminado");
                 TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" concluído ");
@@ -67,6 +68,24 @@ public class Maquina {
                 Maquina.getInstance().modemDisp += p.getModem();
                 Maquina.getInstance().cdDriverDisp += p.getCdDriver();
                 GerenciadorMemoria.removeProcesso(p, Despachante.listaBlocos);
+                
+                return;
+            }
+            
+            if((p!=null)&&(p.getPrioridadeSimbolica()!=0)){
+                //checa se o quantum e igual ao tempo que o processo esta executando 
+                if(p.getQuantumRestante()==(TelaPrincipal.momentoAtual - p.getTempoInicioExec())){ 
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" fim do quantum ");
+                
+                    listaCPU.get(i).setProcessoExecutando(null, i);
+                    
+                    if(p.getPrioridadeSimbolica()<3)
+                        p.setPrioridadeSimbolica(p.getPrioridadeSimbolica()+1);
+                    else
+                        p.setPrioridadeSimbolica(1);
+                    
+                    EscalonadorUsuario.insereProcesso(p);
+                }
             }
         }
     }
