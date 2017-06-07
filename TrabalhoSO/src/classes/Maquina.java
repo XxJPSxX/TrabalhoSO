@@ -8,7 +8,7 @@ import view.TelaPrincipal;
 public class Maquina {
     private static Maquina instancia;
     
-    private int numeroCPU = 4;
+    private  int numeroCPU = 4;
     public List<CPU> listaCPU = new ArrayList<>();
     //public CPU listaCPU[] =  new CPU[numeroCPU];    
     private int memoria = 1024;
@@ -29,6 +29,22 @@ public class Maquina {
             listaCPU.add(new CPU());
         }
     }
+    /* CASO QUEIRAMOS IMPLEMENTAR A FUNÇÃO DE LIMPAR O PROGRAMA PARA INSERIR OUTRO ARQUIVO TEREMOS QUE USAR ALGO DESTE TIPO
+    public static void meLimpe(){
+        //tive que botar tudo estatico
+        numeroCPU = 4;
+        memoria = 1024;
+        impressora = 2;
+        scanner = 1;
+        modem = 1;
+        cdDriver = 2;
+        impressoraDisp = impressora;
+        scannerDisp = scanner;
+        modemDisp = modem;
+        cdDriverDisp = cdDriver;
+        listaCPU = new ArrayList<>();
+    }
+    */
     
     public static synchronized Maquina getInstance(){
         if(instancia==null){

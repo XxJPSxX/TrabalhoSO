@@ -24,6 +24,22 @@ public class CPU {
         this.ProcessoExecutando = ProcessoExecutando;
         //coloca o texto refente a CPU que está sendo utilizada
         if(ProcessoExecutando == null){
+            ProcessoExecutando = null;
+            switch(numeroCPU){
+            case 0: TelaPrincipal.setTextoProcessadorA("");
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU "+numeroCPU+" livre");
+                    break;
+            case 1: TelaPrincipal.setTextoProcessadorB("");
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU "+numeroCPU+" livre");
+                    break;
+            case 2: TelaPrincipal.setTextoProcessadorC("");
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU "+numeroCPU+" livre");
+                    break;
+            case 3: TelaPrincipal.setTextoProcessadorD("");
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU "+numeroCPU+" livre");
+                    break;
+            
+        }
             return;//se o processo recebido como parâmetro for nulo significa que estou apenas setando a CPU como livre
         }
         switch(numeroCPU){

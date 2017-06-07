@@ -21,7 +21,14 @@ public class Despachante{
         
         private Despachante(){
         }
-        
+        /* CASO QUEIRAMOS IMPLEMENTAR A FUNÇÃO DE LIMPAR O PROGRAMA PARA INSERIR OUTRO ARQUIVO TEREMOS QUE USAR ALGO DESTE TIPO
+        public static void meLimpe(){
+            listaProcessos = new ArrayList<Processo>();
+            filaEntrada = new ArrayList<Processo>();
+            listaBlocos = GerenciadorMemoria.criaListaDeBlocos();
+            listaSuspensos = new ArrayList<Processo>();
+        }
+        */
         public static synchronized Despachante getInstance(){
             if(instancia==null){
                 instancia = new Despachante();
@@ -68,7 +75,7 @@ public class Despachante{
                                 if(lista==filaEntrada){
                                     listaSuspensos.add(p);
                                     aux.add(p);
-                                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.getTextoFilaSuspensos()+"; "+p.getNumero());
+                                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(listaSuspensos));
                                 }
                             }
                         }
@@ -77,7 +84,7 @@ public class Despachante{
                         if(lista==filaEntrada){
                             listaSuspensos.add(p);
                             aux.add(p);
-                            TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.getTextoFilaSuspensos()+"; "+p.getNumero());
+                            TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(listaSuspensos));
                         }
                     }
                 //}

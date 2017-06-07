@@ -7,7 +7,7 @@ public class Processo {
     
     //private static int n=0; 
     
-    private int numero;
+    private  int numero;
     //private String nome;
     private int momentoChegada;
     private int prioridade; // 0 = tempo real != 0 = usuarios, quanto maior o valor menos prioridade
@@ -18,7 +18,7 @@ public class Processo {
     private int scanner;
     private int modem;
     private int cdDriver;
-    private int cpuAlocada;
+    private int cpuAlocada = -1;
     
     private int[] indices; //indices dos blocos de memoria em que o processo esta alocado
     //private int tempoRestante;
@@ -58,7 +58,7 @@ public class Processo {
         this.cpuAlocada = cpuAlocada;
     }
 
-    public int getCpuAlocada() {
+    public int getCpuAlocada() {// se = -1 não tem cpu alocada
         return cpuAlocada;
     }
 

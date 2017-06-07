@@ -10,6 +10,12 @@ public class GerenciadorMemoria {
     public static int tamanhoBloco = 32;
     public static int tamanhoMemoria = Maquina.getInstance().getMemoria();
     
+    /* CASO QUEIRAMOS IMPLEMENTAR A FUNÇÃO DE LIMPAR O PROGRAMA PARA INSERIR OUTRO ARQUIVO TEREMOS QUE USAR ALGO DESTE TIPO
+    public static void meLimpe(){
+        tamanhoBloco = 32;
+        tamanhoMemoria = Maquina.getInstance().getMemoria();
+    }
+    */
     public static List<Bloco> criaListaDeBlocos(){
         //cria uma lista de blocos com o tamanho de bloco e tamanho da memoria fornecidos
         //inicializa os objetos Bloco pertencentes a lista

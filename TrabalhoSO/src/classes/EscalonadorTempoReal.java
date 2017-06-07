@@ -22,7 +22,12 @@ public class EscalonadorTempoReal implements Runnable{
     private EscalonadorTempoReal(){    
         
     }
-    
+    /* CASO QUEIRAMOS IMPLEMENTAR A FUNÇÃO DE LIMPAR O PROGRAMA PARA INSERIR OUTRO ARQUIVO TEREMOS QUE USAR ALGO DESTE TIPO
+    public static void meLimpe(){
+        filaFCFS = new ArrayList<Processo>();
+        terminou = false;
+    }
+    */
     public static synchronized EscalonadorTempoReal getInstance(){
         if(instancia==null){
             instancia = new EscalonadorTempoReal();
@@ -43,6 +48,8 @@ public class EscalonadorTempoReal implements Runnable{
                     
                     atual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
                     filaFCFS.remove(0);
+                    System.out.println("REMOVEU");
+                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFCFS));
                 }
                 else{
                     if(atual.ProcessoExecutando.getPrioridade()!=0){
@@ -64,6 +71,8 @@ public class EscalonadorTempoReal implements Runnable{
                         atual.setProcessoExecutando(filaFCFS.get(0), i);
                         atual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
                         filaFCFS.remove(0);
+                        System.out.println("REMOVEU");
+                        TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFCFS));
                         //count--;
                     }
                     
@@ -77,5 +86,6 @@ public class EscalonadorTempoReal implements Runnable{
     
     public static void insereProcesso(Processo processo){
         filaFCFS.add(processo);
+        TelaPrincipal.setTextoFilaFCFS(TelaPrincipal.listToString(filaFCFS));
     }
 }

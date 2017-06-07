@@ -25,7 +25,14 @@ public class EscalonadorUsuario implements Runnable{
     private EscalonadorUsuario(){
         
     }
-    
+    /* CASO QUEIRAMOS IMPLEMENTAR A FUNÇÃO DE LIMPAR O PROGRAMA PARA INSERIR OUTRO ARQUIVO TEREMOS QUE USAR ALGO DESTE TIPO
+    public static void meLimpe(){
+        filaFeed1 = new ArrayList<Processo>();
+        filaFeed2 = new ArrayList<Processo>();
+        filaFeed3 = new ArrayList<Processo>();
+        Processo processoAtual = null;
+    }
+    */
     public static synchronized EscalonadorUsuario getInstance(){
         if(instancia==null){
             instancia = new EscalonadorUsuario();
@@ -34,6 +41,7 @@ public class EscalonadorUsuario implements Runnable{
     }
     
     public void run(){
+        System.out.println(TelaPrincipal.momentoAtual);
        if(EscalonadorTempoReal.filaFCFS.size()==0){//só executa os processos de FEEDBACK caso nenhum de TEMPO REAL esteja na fila de FCFS
            
            if(filaFeed1.size() != 0){
@@ -48,6 +56,7 @@ public class EscalonadorUsuario implements Runnable{
                         cpuAtual.setProcessoExecutando(filaFeed1.get(contador), NumCpuAtual);
                         cpuAtual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
                         filaFeed1.remove(0);
+                        TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed1));
                         NumCpuAtual = proximaCPULivre();
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
@@ -72,6 +81,7 @@ public class EscalonadorUsuario implements Runnable{
                         cpuAtual.setProcessoExecutando(filaFeed2.get(contador), NumCpuAtual);
                         cpuAtual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
                         filaFeed2.remove(0);
+                        TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed2));
                         NumCpuAtual = proximaCPULivre();
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
@@ -96,6 +106,7 @@ public class EscalonadorUsuario implements Runnable{
                         cpuAtual.setProcessoExecutando(filaFeed3.get(contador), NumCpuAtual);
                         cpuAtual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
                         filaFeed3.remove(0);
+                        TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed3));
                         NumCpuAtual = proximaCPULivre();
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
@@ -116,10 +127,13 @@ public class EscalonadorUsuario implements Runnable{
     public static void insereProcesso(Processo processo){
         switch(processo.getPrioridadeSimbolica()){
             case 1: filaFeed1.add(processo);
+                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed1));
                 break;
             case 2: filaFeed2.add(processo);
+                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed2));
                 break;
             case 3: filaFeed3.add(processo);
+                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed3));
                 break;
             
         }
@@ -181,7 +195,7 @@ public class EscalonadorUsuario implements Runnable{
             Maquina.getInstance().cdDriverDisp += p.getCdDriver();
                     
             Despachante.listaSuspensos.add(p);
-            TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.getTextoFilaSuspensos()+"; "+p.getNumero());
+            TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(Despachante.listaSuspensos));
         }
         return blocos;
     }

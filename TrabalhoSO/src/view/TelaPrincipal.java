@@ -3,8 +3,11 @@ package view;
 import classes.Despachante;
 import classes.EscalonadorTempoReal;
 import classes.EscalonadorUsuario;
+import classes.GerenciadorMemoria;
 import classes.Maquina;
+import classes.Processo;
 import java.io.File;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
@@ -405,7 +408,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         momentoAtual++;
         setTextoMomentoAtual(momentoAtual);
-        setTextoLog(getTextoLog()+"\nMomento: "+momentoAtual);
+        setTextoLog(getTextoLog()+"\nMomento: "+momentoAtual+"\nProcessos executando:");
+        int contador = 0;
+        for(int i=0;i<Maquina.getInstance().listaCPU.size();i++){
+            if(Maquina.getInstance().listaCPU.get(i).ProcessoExecutando != null){
+                setTextoLog(getTextoLog()+"\nProcesso: " + Maquina.getInstance().listaCPU.get(i).ProcessoExecutando.getNumero());
+                contador++;
+            } 
+        }
+        if(contador == 0){
+            setTextoLog(getTextoLog()+"\nNenhum processo sendo executado no momento atual");
+        }
         
         Maquina.getInstance().checaProcessos();
         
@@ -485,6 +498,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     public static String getTextoProcessadorD(){
         return textoProcessadorD.getText();
+    }
+    public static String listToString(List<Processo> lista){
+        //funcao para facilitar a insercao de remocao de elementos no texto das filas, evitando manipulacao de strings
+        //sempre que o texto for ser alterado, primeiramente remove-se o elemento(ou insere-se) e então substitui-se o texto
+        //com o listToString da lista correspondente.
+        String resp = "";
+        for(int i=0;i<lista.size();i++){
+            if(i+1 == lista.size()){//o ultimo nao terá o ponto e vírgula no final
+                resp+=lista.get(i).getNumero();
+            }else{
+                resp+=lista.get(i).getNumero()+"; ";
+            }
+            
+        }
+        return resp;
     }
     
     
