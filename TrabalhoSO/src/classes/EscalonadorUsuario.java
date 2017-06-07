@@ -50,6 +50,12 @@ public class EscalonadorUsuario implements Runnable{
                if(NumCpuAtual == -1){
                   return;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
                }else{
+                   System.out.println("MADEIRADA");
+                   //o numero era pra ser CPU 1 
+                   //mas a funcao retornou CPU 0 , que esta ocupada com outro processo, PQ?
+                   System.out.println("CPU NUMERO "+NumCpuAtual);
+                   System.out.println(Maquina.getInstance().listaCPU.get(NumCpuAtual).ProcessoExecutando.getNumero());
+                   
                    cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    int contador = 0;
                    while((cpuAtual != null) && filaFeed1.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
@@ -266,6 +272,7 @@ public class EscalonadorUsuario implements Runnable{
             if(atual.ProcessoExecutando == null){
                 return i;
             }
+            i++;
         }
         return -1;
     }
