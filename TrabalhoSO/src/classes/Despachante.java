@@ -82,7 +82,7 @@ public class Despachante{
                             //e colocado em memoria baseado em sua prioridade original   
                             
                             int n = EscalonadorUsuario.abreEspacoMemoria(p);
-                            
+                            System.out.println("AAAAAA "+n+" AAAAA");
                             if(n==0){
                                 int i = GerenciadorMemoria.insereProcesso(p, listaBlocos);
                                 //if(resultado==0){ condicao desnecessaria pois o espaço ja foi liberado

@@ -27,17 +27,16 @@ public class CPU {
             ProcessoExecutando = null;
             switch(numeroCPU){
             case 0: TelaPrincipal.setTextoProcessadorA("");
-                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU "+numeroCPU+" livre");
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU A livre");
                     break;
             case 1: TelaPrincipal.setTextoProcessadorB("");
-            System.out.println("PQP!!!!!!!!!!");
-                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU "+numeroCPU+" livre");
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU B livre");
                     break;
             case 2: TelaPrincipal.setTextoProcessadorC("");
-                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU "+numeroCPU+" livre");
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU C livre");
                     break;
             case 3: TelaPrincipal.setTextoProcessadorD("");
-                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU "+numeroCPU+" livre");
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU D livre");
                     break;
             
         }
@@ -45,19 +44,19 @@ public class CPU {
         }
         switch(numeroCPU){
             case 0: TelaPrincipal.setTextoProcessadorA(""+ProcessoExecutando.getNumero());
-                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU "+numeroCPU);
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU A");
                     ProcessoExecutando.setCpuAlocada(numeroCPU);
                     break;
             case 1: TelaPrincipal.setTextoProcessadorB(""+ProcessoExecutando.getNumero());
-                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU "+numeroCPU);
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU B");
                     ProcessoExecutando.setCpuAlocada(numeroCPU);
                     break;
             case 2: TelaPrincipal.setTextoProcessadorC(""+ProcessoExecutando.getNumero());
-                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU "+numeroCPU);
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU C");
                     ProcessoExecutando.setCpuAlocada(numeroCPU);
                     break;
             case 3: TelaPrincipal.setTextoProcessadorD(""+ProcessoExecutando.getNumero());
-                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU "+numeroCPU);
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+ProcessoExecutando.getNumero()+" executando na CPU D");
                     ProcessoExecutando.setCpuAlocada(numeroCPU);
                     break;
             

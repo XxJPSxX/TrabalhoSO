@@ -45,7 +45,7 @@ public class Processo {
 
     @Override
     public String toString() {
-        return "Processo " +numero + "{ momentoChegada=" + momentoChegada + ", prioridade=" + prioridade + ", duracao=" + duracao + ", memoria=" + memoria + ", impressora=" + impressora + ", scanner=" + scanner + ", modem=" + modem + ", cdDriver=" + cdDriver + "Prioridade fake= "+ prioridadeSimbolica+'}';
+        return "Processo " +numero + "{ momentoChegada=" + momentoChegada + ", prioridade=" + prioridade + ", duracao=" + duracao + ", memoria=" + memoria + ", impressora=" + impressora + ", scanner=" + scanner + ", modem=" + modem + ", cdDriver=" + cdDriver + '}';
     }
     
     /*

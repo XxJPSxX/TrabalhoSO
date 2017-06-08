@@ -213,6 +213,10 @@ public class EscalonadorUsuario implements Runnable{
                     
             Despachante.listaSuspensos.add(p);
             TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(Despachante.listaSuspensos));
+            TelaPrincipal.setTextoFilaFeed(TelaPrincipal.listToString(filaFeed1));
+            TelaPrincipal.setTextoFilaFeed2(TelaPrincipal.listToString(filaFeed2));
+            TelaPrincipal.setTextoFilaFeed3(TelaPrincipal.listToString(filaFeed3));
+            
             TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" inserido na fila de suspensos");
         }
         return blocos;
@@ -231,11 +235,11 @@ public class EscalonadorUsuario implements Runnable{
         switch(processo.getPrioridade()){
             case 0:
                 if(checaMemoria(processo)){
-                    abreEspacoRotina(t,filaFeed3);
+                    t = abreEspacoRotina(t,filaFeed3);
                     if(t>0) 
-                        abreEspacoRotina(t,filaFeed2);
+                        t = abreEspacoRotina(t,filaFeed2);
                     if(t>0) 
-                        abreEspacoRotina(t,filaFeed1);
+                        t = abreEspacoRotina(t,filaFeed1);
                     if(t>0){
                         return -1; //nao conseguiu memoria 
                     }
@@ -246,9 +250,9 @@ public class EscalonadorUsuario implements Runnable{
                 break;
             case 1:
                 if(checaMemoria(processo)){
-                    abreEspacoRotina(t,filaFeed3);
+                    t = abreEspacoRotina(t,filaFeed3);
                     if(t>0) 
-                        abreEspacoRotina(t,filaFeed2);
+                        t = abreEspacoRotina(t,filaFeed2);
                     if(t>0){
                         return -1; //nao conseguiu memoria 
                     }
@@ -259,7 +263,7 @@ public class EscalonadorUsuario implements Runnable{
                 break;
             case 2:
                 if(checaMemoria(processo)){
-                    abreEspacoRotina(t,filaFeed3);
+                    t = abreEspacoRotina(t,filaFeed3);
                     if(t>0){
                         return -1; //nao conseguiu memoria 
                     }
