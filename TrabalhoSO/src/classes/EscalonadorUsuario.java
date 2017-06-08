@@ -115,7 +115,7 @@ public class EscalonadorUsuario implements Runnable{
                    cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    int contador = 0;
                    while((cpuAtual != null) && filaFeed3.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
-                        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+filaFeed2.get(contador).getNumero()+" removido da fila Feed 3");
+                        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+filaFeed3.get(contador).getNumero()+" removido da fila Feed 3");
                         cpuAtual.setProcessoExecutando(filaFeed3.get(contador), NumCpuAtual);
                         cpuAtual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
                         cpuAtual.ProcessoExecutando.setQuantumRestante((int) Math.pow(quantum,3));
