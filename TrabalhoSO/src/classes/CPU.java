@@ -30,6 +30,7 @@ public class CPU {
                     TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU "+numeroCPU+" livre");
                     break;
             case 1: TelaPrincipal.setTextoProcessadorB("");
+            System.out.println("PQP!!!!!!!!!!");
                     TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\n CPU "+numeroCPU+" livre");
                     break;
             case 2: TelaPrincipal.setTextoProcessadorC("");

@@ -54,16 +54,18 @@ public class EscalonadorUsuario implements Runnable{
                    //o numero era pra ser CPU 1 
                    //mas a funcao retornou CPU 0 , que esta ocupada com outro processo, PQ?
                    System.out.println("CPU NUMERO "+NumCpuAtual);
-                   System.out.println(Maquina.getInstance().listaCPU.get(NumCpuAtual).ProcessoExecutando.getNumero());
+                   //System.out.println(Maquina.getInstance().listaCPU.get(NumCpuAtual).ProcessoExecutando.getNumero());
                    
                    cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    int contador = 0;
                    while((cpuAtual != null) && filaFeed1.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
+                        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+filaFeed1.get(contador).getNumero()+" removido da fila Feed 1");
                         cpuAtual.setProcessoExecutando(filaFeed1.get(contador), NumCpuAtual);
                         cpuAtual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
                         cpuAtual.ProcessoExecutando.setQuantumRestante((int) Math.pow(quantum,1));
                         filaFeed1.remove(0);
                         TelaPrincipal.setTextoFilaFeed(TelaPrincipal.listToString(filaFeed1));
+                        
                         NumCpuAtual = proximaCPULivre();
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
@@ -85,11 +87,13 @@ public class EscalonadorUsuario implements Runnable{
                    cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    int contador = 0;
                    while((cpuAtual != null) && filaFeed2.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
+                        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+filaFeed2.get(contador).getNumero()+" removido da fila Feed 2");
                         cpuAtual.setProcessoExecutando(filaFeed2.get(contador), NumCpuAtual);
                         cpuAtual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
                         cpuAtual.ProcessoExecutando.setQuantumRestante((int) Math.pow(quantum,2));
                         filaFeed2.remove(0);
                         TelaPrincipal.setTextoFilaFeed2(TelaPrincipal.listToString(filaFeed2));
+                        
                         NumCpuAtual = proximaCPULivre();
                         if(NumCpuAtual == -1){
                             break;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
@@ -111,6 +115,7 @@ public class EscalonadorUsuario implements Runnable{
                    cpuAtual= Maquina.getInstance().listaCPU.get(NumCpuAtual);
                    int contador = 0;
                    while((cpuAtual != null) && filaFeed3.size() != 0){//se ainda tem CPU e ainda tem processos na fila 1
+                        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+filaFeed2.get(contador).getNumero()+" removido da fila Feed 3");
                         cpuAtual.setProcessoExecutando(filaFeed3.get(contador), NumCpuAtual);
                         cpuAtual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
                         cpuAtual.ProcessoExecutando.setQuantumRestante((int) Math.pow(quantum,3));
@@ -136,13 +141,16 @@ public class EscalonadorUsuario implements Runnable{
     public static void insereProcesso(Processo processo){
         switch(processo.getPrioridadeSimbolica()){
             case 1: filaFeed1.add(processo);
-                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed1));
+                    TelaPrincipal.setTextoFilaFeed(TelaPrincipal.listToString(filaFeed1));
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+processo.getNumero()+" inserido na fila Feed 1");
                 break;
             case 2: filaFeed2.add(processo);
-                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed2));
+                    TelaPrincipal.setTextoFilaFeed2(TelaPrincipal.listToString(filaFeed2));
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+processo.getNumero()+" inserido na fila Feed 2");
                 break;
             case 3: filaFeed3.add(processo);
-                    TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(filaFeed3));
+                    TelaPrincipal.setTextoFilaFeed3(TelaPrincipal.listToString(filaFeed3));
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+processo.getNumero()+" inserido na fila Feed 3");
                 break;
             
         }
@@ -205,6 +213,7 @@ public class EscalonadorUsuario implements Runnable{
                     
             Despachante.listaSuspensos.add(p);
             TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(Despachante.listaSuspensos));
+            TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" inserido na fila de suspensos");
         }
         return blocos;
     }

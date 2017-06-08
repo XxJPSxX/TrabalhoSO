@@ -37,13 +37,13 @@ public class EscalonadorTempoReal implements Runnable{
     
     public void run(){
         if(filaFCFS.size()!=0){
-            
             int count = 0; //conta o numero de CPU's executando processos de usuario
             
             int i = 0;
             while((i<Maquina.getInstance().listaCPU.size())&&(filaFCFS.size()!=0)){
                 CPU atual = Maquina.getInstance().listaCPU.get(i);
                 if(atual.ProcessoExecutando==null){
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+filaFCFS.get(0).getNumero()+" removido da fila FCFS");
                     atual.setProcessoExecutando(filaFCFS.get(0), i);
                     
                     atual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
@@ -75,7 +75,7 @@ public class EscalonadorTempoReal implements Runnable{
                             p.setPrioridadeSimbolica(1);
                         EscalonadorUsuario.insereProcesso(p);
 
-                        
+                        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+filaFCFS.get(0).getNumero()+" removido da fila FCFS");
                         atual.setProcessoExecutando(filaFCFS.get(0), i);
                         atual.ProcessoExecutando.setTempoInicioExec(TelaPrincipal.momentoAtual);
                         removeProcessoFCFS(filaFCFS.get(0));
@@ -91,8 +91,10 @@ public class EscalonadorTempoReal implements Runnable{
     }
     
     public static void insereProcesso(Processo processo){
+        System.out.println("TempoReal0");
         filaFCFS.add(processo);
         TelaPrincipal.setTextoFilaFCFS(TelaPrincipal.listToString(filaFCFS));
+        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+processo.getNumero()+" inserido na fila FCFS");
     }
     
     private static void removeProcessoFCFS(Processo processo){

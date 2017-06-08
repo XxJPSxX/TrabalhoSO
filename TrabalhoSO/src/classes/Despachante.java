@@ -76,6 +76,7 @@ public class Despachante{
                                     listaSuspensos.add(p);
                                     aux.add(p);
                                     TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(listaSuspensos));
+                                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" inserido na fila de suspensos");
                                 }
                             }
                         }
@@ -85,6 +86,7 @@ public class Despachante{
                             listaSuspensos.add(p);
                             aux.add(p);
                             TelaPrincipal.setTextoFilaSuspesos(TelaPrincipal.listToString(listaSuspensos));
+                            TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" inserido na fila de suspensos");
                         }
                     }
                 //}
@@ -98,7 +100,7 @@ public class Despachante{
         
         //foi assumido que processos de TR nao podem ficar na fila de suspenso
         public void checaFilaEntrada(){
-            
+                                        System.out.println("AQUI0");
             int atual = TelaPrincipal.getMomentoAtual();
             
             if(listaProcessos.size()!=0){
@@ -116,15 +118,18 @@ public class Despachante{
             }
             
             if(filaEntrada.size()!=0){
+                System.out.println("AQUI3");
                 List<Processo> auxFE = new ArrayList<Processo>();
                 List<Processo> auxSusp = new ArrayList<Processo>(); 
                 
                 int tam = filaEntrada.size();
                 for(int i=0;i<tam;i++){
                     Processo p = filaEntrada.get(i);
+                    System.out.println("AQUI4 "+p.getNumero());
                     if(p.getPrioridade()==0){
                         int resultado = GerenciadorMemoria.insereProcesso(p, listaBlocos);
                         if(resultado==0){
+                            System.out.println("AQUI1");
                             EscalonadorTempoReal.getInstance().insereProcesso(p);
                             auxFE.add(p);
                         }
@@ -136,6 +141,7 @@ public class Despachante{
                             
                             //insere processo
                             GerenciadorMemoria.insereProcesso(p, listaBlocos);
+                                                        System.out.println("AQUI2");
                             EscalonadorTempoReal.getInstance().insereProcesso(p);
                             auxFE.add(p);
                         }

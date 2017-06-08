@@ -57,11 +57,14 @@ public class Maquina {
         List<CPU> listaCPU = Maquina.getInstance().listaCPU;
         for(int i=0;i<listaCPU.size();i++){
             Processo p = listaCPU.get(i).ProcessoExecutando;
-            
+            if(p!=null){
+                System.out.println("Processo ATUAL: "+p.getNumero());
+                System.out.println("TempoExec: "+p.getTempoExec()+" Tempo duracao: "+p.getDuracao());
+            }
             if((p!=null)&&(p.getTempoExec()==p.getDuracao())){
                 //System.out.println("Processo "+p.getNumero()+"terminado");
                 TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" concluído ");
-                
+                System.out.println("Processo "+p.getNumero()+" Acabou!!!! na cpu "+i);
                 listaCPU.get(i).setProcessoExecutando(null, i);
                 Maquina.getInstance().scannerDisp += p.getScanner();
                 Maquina.getInstance().impressoraDisp += p.getImpressora();
@@ -69,7 +72,7 @@ public class Maquina {
                 Maquina.getInstance().cdDriverDisp += p.getCdDriver();
                 GerenciadorMemoria.removeProcesso(p, Despachante.listaBlocos);
                 
-                return;
+                return;//PROBLEMA AQUI!!!
             }
             
             if((p!=null)&&(p.getPrioridadeSimbolica()!=0)){
@@ -108,6 +111,13 @@ public class Maquina {
 
     public int getCdDriver() {
         return cdDriver;
+    }
+    public void atualizaTextoDispositivos(){
+        TelaPrincipal.textoMemoria.setText(GerenciadorMemoria.memoriaDisponivel(Despachante.listaBlocos)+"");
+        TelaPrincipal.textoImpressora.setText(impressoraDisp+"");
+        TelaPrincipal.textoScanner.setText(scannerDisp+"");
+        TelaPrincipal.textoModem.setText(modemDisp+"");
+        TelaPrincipal.textoCdDriver.setText(cdDriverDisp+"");
     }
     
 }
