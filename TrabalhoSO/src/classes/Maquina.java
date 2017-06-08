@@ -72,22 +72,23 @@ public class Maquina {
                 Maquina.getInstance().cdDriverDisp += p.getCdDriver();
                 GerenciadorMemoria.removeProcesso(p, Despachante.listaBlocos);
                 
-                return;//PROBLEMA AQUI!!!
+                //return;//PROBLEMA AQUI!!!
             }
-            
-            if((p!=null)&&(p.getPrioridadeSimbolica()!=0)){
-                //checa se o quantum e igual ao tempo que o processo esta executando 
-                if(p.getQuantumRestante()==(TelaPrincipal.momentoAtual - p.getTempoInicioExec())){ 
-                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" fim do quantum ");
-                
-                    listaCPU.get(i).setProcessoExecutando(null, i);
-                    
-                    if(p.getPrioridadeSimbolica()<3)
-                        p.setPrioridadeSimbolica(p.getPrioridadeSimbolica()+1);
-                    else
-                        p.setPrioridadeSimbolica(1);
-                    
-                    EscalonadorUsuario.insereProcesso(p);
+            else{
+                if((p!=null)&&(p.getPrioridadeSimbolica()!=0)){
+                    //checa se o quantum e igual ao tempo que o processo esta executando 
+                    if(p.getQuantumRestante()==(TelaPrincipal.momentoAtual - p.getTempoInicioExec())){ 
+                        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" fim do quantum ");
+
+                        listaCPU.get(i).setProcessoExecutando(null, i);
+
+                        if(p.getPrioridadeSimbolica()<3)
+                            p.setPrioridadeSimbolica(p.getPrioridadeSimbolica()+1);
+                        else
+                            p.setPrioridadeSimbolica(1);
+
+                        EscalonadorUsuario.insereProcesso(p);
+                    }
                 }
             }
         }

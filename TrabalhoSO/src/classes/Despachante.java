@@ -36,6 +36,25 @@ public class Despachante{
             return instancia;
         }
         
+        public static boolean checaProcessoPossivel(Processo processo){
+            if(processo.getMemoria()>Maquina.getInstance().getMemoria()){
+                return false;
+            }
+            if(processo.getImpressora()>Maquina.getInstance().getImpressora()){
+                return false;
+            }
+            if(processo.getScanner()>Maquina.getInstance().getScanner()){
+                return false;
+            }
+            if(processo.getModem()>Maquina.getInstance().getModem()){
+                return false;
+            }
+            if(processo.getCdDriver()>Maquina.getInstance().getCdDriver()){
+                return false;
+            }
+            return true;
+        }
+        
         private static void checaFilaRotina(List<Processo> lista){
             int tam = lista.size();
             List<Processo> aux = new ArrayList<Processo>();
@@ -44,6 +63,7 @@ public class Despachante{
             for(int j=0;j<lista.size();j++){
                 Processo p = lista.get(j);
                 //if(p.getPrioridade()!=0){  //condicao desnecessaria pois assume-se que processos de TR nunca ficam suspensos
+                if(Despachante.checaProcessoPossivel(p)){  
                     if((p.getScanner()<=Maquina.getInstance().scannerDisp)&&(p.getImpressora()<=Maquina.getInstance().impressoraDisp)&&(p.getModem()<=Maquina.getInstance().modemDisp)&&(p.getCdDriver()<=Maquina.getInstance().cdDriverDisp)){
                         int resultado = GerenciadorMemoria.insereProcesso(p, listaBlocos);
                         
@@ -90,6 +110,11 @@ public class Despachante{
                         }
                     }
                 //}
+                }
+                else{
+                    TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" não pode ser executado nesta Máquina"); 
+                    aux.add(p);
+                }
             }    
             //tira da fila os processos que foram colocados em memoria (ou em outra fila)
             for(int k=0;k<aux.size();k++){
@@ -126,25 +151,31 @@ public class Despachante{
                 for(int i=0;i<tam;i++){
                     Processo p = filaEntrada.get(i);
                     System.out.println("AQUI4 "+p.getNumero());
-                    if(p.getPrioridade()==0){
-                        int resultado = GerenciadorMemoria.insereProcesso(p, listaBlocos);
-                        if(resultado==0){
-                            System.out.println("AQUI1");
-                            EscalonadorTempoReal.getInstance().insereProcesso(p);
-                            auxFE.add(p);
+                    if(Despachante.checaProcessoPossivel(p)){
+                        if(p.getPrioridade()==0){
+                            int resultado = GerenciadorMemoria.insereProcesso(p, listaBlocos);
+                            if(resultado==0){
+                                System.out.println("AQUI1");
+                                EscalonadorTempoReal.getInstance().insereProcesso(p);
+                                auxFE.add(p);
+                            }
+                            else{
+                                //e possivel que a memoria esteja cheia
+                                //apenas com processos de TR?
+
+                                EscalonadorUsuario.getInstance().abreEspacoMemoria(p);
+
+                                //insere processo
+                                GerenciadorMemoria.insereProcesso(p, listaBlocos);
+                                                            System.out.println("AQUI2");
+                                EscalonadorTempoReal.getInstance().insereProcesso(p);
+                                auxFE.add(p);
+                            }
                         }
-                        else{
-                            //e possivel que a memoria esteja cheia
-                            //apenas com processos de TR?
-                            
-                            EscalonadorUsuario.getInstance().abreEspacoMemoria(p);
-                            
-                            //insere processo
-                            GerenciadorMemoria.insereProcesso(p, listaBlocos);
-                                                        System.out.println("AQUI2");
-                            EscalonadorTempoReal.getInstance().insereProcesso(p);
-                            auxFE.add(p);
-                        }
+                    }
+                    else{
+                        TelaPrincipal.setTextoLog(TelaPrincipal.getTextoLog()+"\nProcesso "+p.getNumero()+" não pode ser executado nesta Máquina"); 
+                        auxFE.add(p);
                     }
                 }
                 for(int k=0;k<auxFE.size();k++){
