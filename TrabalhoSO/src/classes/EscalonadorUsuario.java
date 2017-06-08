@@ -50,7 +50,6 @@ public class EscalonadorUsuario implements Runnable{
                if(NumCpuAtual == -1){
                   return;//não existem CPU's livres para que o escalonador de feedback possa trabalhar. O escalonador de feedback não irá tirar processos.
                }else{
-                   System.out.println("MADEIRADA");
                    //o numero era pra ser CPU 1 
                    //mas a funcao retornou CPU 0 , que esta ocupada com outro processo, PQ?
                    System.out.println("CPU NUMERO "+NumCpuAtual);
